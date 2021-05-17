@@ -23,7 +23,6 @@
   </p>
 
   <Button type="primary" @click="count++">count is: {{ count }}</Button>
-  <!-- <a-button @click="count++">count is: {{ count }}</a-button> -->
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.

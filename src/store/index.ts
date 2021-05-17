@@ -32,10 +32,10 @@ export default createStore({
     increment(context) {
       context.commit('increment')
     },
-    sign: async ({ commit }, user: UserAuthModel) => {
+    SIGN: async ({ commit }, user: UserAuthModel) => {
       commit(SET_USER, user)
     },
-    signout: async ({ commit }) => commit(CLEAR_USER)
+    SIGNOUT: async ({ commit }) => commit(CLEAR_USER)
   },
   getters: {
     double(state: typeof defaultState) {

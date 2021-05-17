@@ -7,8 +7,6 @@ export const TokenConst = {
 
 // Message Const
 export const MessageConst = {
-  AUTO_LOGIN_FAIL_TIPS_MSG: '系统登录错误，是否重新登录？',
-  AUTO_LOGIN_FAIL_TIPS_TITLE: '登录提示',
   TOKEN_EXPIRE_MSG: '登录已过期，请重新登录',
 
   AUTO_LOGIN_FAIL_MESSAGE: '系统登录错误',

@@ -1,8 +1,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { ApiConst, NO_TOKEN_APIS } from '../common/api'
 import { MessageConst } from '../common/const'
-import { openErrorMsg, openWarnMsg } from '../common/message'
-import { useLog, useUser } from '../hook'
+import useMessage from '../hook/message'
+import { useUser } from '../hook/user'
+import { useLog } from '../hook/log'
 import router from '../router'
 import RouterConst from '../router/const'
 import { getUrlWithOutParams } from '../utils'
@@ -28,7 +29,7 @@ const setToken = async (config: AxiosRequestConfig) => {
       try {
         config.headers.Authorization = `Bearer ${user.token}`
       } catch (e) {
-        await openWarnMsg(MessageConst.TOKEN_EXPIRE_MSG)
+        useMessage().openWarnMsg(MessageConst.TOKEN_EXPIRE_MSG)
         await router.replace({
           name: RouterConst.ROUTER_LOGIN,
           params: { redirect: router.currentRoute.value.fullPath }
@@ -182,7 +183,7 @@ class AxiosUtil {
       throw new Error()
     } catch (e) {
       if (showErrorMsg) {
-        openErrorMsg(MessageConst.SERVER_DATA_ERROR)
+        useMessage().openErrorMsg(MessageConst.SERVER_DATA_ERROR)
       }
       this.handelResponseError(e, res)
       throw e

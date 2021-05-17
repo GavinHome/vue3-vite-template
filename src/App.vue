@@ -1,9 +1,22 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="app" v-cloak>
+    <!-- <a-config-provider :locale="locale">
+      <transition name="fade" mode="out-in">
+        <keep-alive>
+          <router-view v-if="$route.meta.keepAlive" />
+        </keep-alive>
+      </transition>
+
+      <transition name="fade" mode="out-in">
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
+      </transition>
+    </a-config-provider> -->
+    <!-- <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div> -->
+    <router-view />
   </div>
-  <router-view />
 </template>
 
 <script lang="ts">

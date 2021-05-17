@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import styleImport from 'vite-plugin-style-import'
+import createImportPlugin from 'vite-plugin-import'
 import { resolve } from 'path'
 
 // https://vitejs.dev/config/
@@ -19,6 +20,16 @@ export default defineConfig({
           resolveComponent: (name) => {
             return `ant-design-vue/lib/${name}`
           }
+        }
+      ]
+    }),
+    createImportPlugin({
+      onlyBuild: false, // if onlyBuild === true, this plugin takes effect only in vite build mode; onlyBuild's default value is true.
+      babelImportPluginOptions: [
+        {
+          libraryName: 'ant-design-vue',
+          libraryDirectory: 'es',
+          style: 'css'
         }
       ]
     })

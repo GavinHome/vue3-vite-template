@@ -1,7 +1,15 @@
 import { createStore } from 'vuex'
+import { UserAuthModel } from '../common/model'
+import { CLEAR_USER, SET_USER } from './types'
 
-const defaultState = {
-  count: 0
+interface AppState {
+  count: number
+  user: UserAuthModel | null
+}
+
+const defaultState: AppState = {
+  count: 0,
+  user: null
 }
 
 // create a new store
@@ -12,12 +20,22 @@ export default createStore({
   mutations: {
     increment(state: typeof defaultState) {
       state.count += 1
+    },
+    SET_USER: (state: typeof defaultState, user: UserAuthModel) => {
+      state.user = user
+    },
+    CLEAR_USER: (state: typeof defaultState) => {
+      state.user = null
     }
   },
   actions: {
     increment(context) {
       context.commit('increment')
-    }
+    },
+    sign: async ({ commit }, user: UserAuthModel) => {
+      commit(SET_USER, user)
+    },
+    signout: async ({ commit }) => commit(CLEAR_USER)
   },
   getters: {
     double(state: typeof defaultState) {

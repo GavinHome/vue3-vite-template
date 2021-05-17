@@ -1,12 +1,12 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { ApiConst, BASE_URL, NO_TOKEN_APIS } from './const'
+import { ApiConst, NO_TOKEN_APIS } from '../common/api'
+import { MessageConst } from '../common/const'
+import { openErrorMsg, openWarnMsg } from '../common/message'
+import { useLog, useUser } from '../hook'
 import router from '../router'
 import RouterConst from '../router/const'
-import store from '../store'
-import { A_USER_CHECK, G_TOKEN } from '../store/types'
 import { getUrlWithOutParams } from '../utils'
-import { ApiResult, ContentType, HttpMethod } from './model'
-import { AppConst } from '../common/const'
+import { ResponseResult, ContentType, HttpMethod } from './model'
 
 interface AxiosOption extends AxiosRequestConfig {
   contentType?: ContentType
@@ -19,19 +19,19 @@ const setToken = async (config: AxiosRequestConfig) => {
 
   const outParamsUrl = getUrlWithOutParams(config.url)
   if (config.url && NO_TOKEN_APIS.every((x) => x !== outParamsUrl)) {
+    const user = useUser()
     if (outParamsUrl === ApiConst.API_REFRESH_TOKEN) {
       if (!config.headers.Authorization) {
-        config.headers.Authorization = `Bearer ${store.getters[G_TOKEN]}`
+        config.headers.Authorization = `Bearer ${user.token}`
       }
     } else {
       try {
-        const token = await store.dispatch(A_USER_CHECK)
-        config.headers.Authorization = `Bearer ${token}`
+        config.headers.Authorization = `Bearer ${user.token}`
       } catch (e) {
-        // await openWarnMsg(MessageConst.TOKEN_EXPIRE_MSG);
+        await openWarnMsg(MessageConst.TOKEN_EXPIRE_MSG)
         await router.replace({
-          name: RouterConst.ROUTER_LOGIN
-          // params: { redirect: router.currentRoute.fullPath }
+          name: RouterConst.ROUTER_LOGIN,
+          params: { redirect: router.currentRoute.value.fullPath }
         })
       }
     }
@@ -52,8 +52,7 @@ const setToken = async (config: AxiosRequestConfig) => {
   }
 }
 
-const apiHost = BASE_URL
-// console.log(`apiHost is [${apiHost}]`)
+const apiHost = import.meta.env.PROD ? (import.meta.env.VITE_APP_API_HOST as string) : '/api'
 
 const axiosInstance = axios.create({
   baseURL: apiHost,
@@ -166,7 +165,7 @@ class AxiosUtil {
   ): T {
     try {
       if (res.status === 200) {
-        const apiReturn = res.data as ApiResult
+        const apiReturn = res.data as ResponseResult
 
         if (convertResult) {
           if (apiReturn.data.isSuccess === false) {
@@ -182,10 +181,8 @@ class AxiosUtil {
       this.handelResponseError(error, res)
       throw new Error()
     } catch (e) {
-      // const msg = `axios error! status:[${res.status}]statusText:[${res.statusText}]mgs:[${e}]`
-      // console.log(msg)
       if (showErrorMsg) {
-        // openErrorMsg(MessageConst.SERVER_DATA_ERROR);
+        openErrorMsg(MessageConst.SERVER_DATA_ERROR)
       }
       this.handelResponseError(e, res)
       throw e
@@ -196,12 +193,12 @@ class AxiosUtil {
   private handelResquestError<T = any>(error: any): T {
     // eslint-disable-next-line no-unused-vars
     const bodyContent = {
-      entryName: `${AppConst.SYSTEM_NAME}, ${AppConst.VUE_APP_VERSIONNAME}`,
-      version: `${AppConst.VUE_APP_VERSION}, ${AppConst.VUE_APP_REVISION}`,
+      entryName: `${import.meta.env.VITE_APP_TITLE}, ${import.meta.env.VITE_APP_VERSIONNAME}`,
+      version: `${import.meta.env.VITE_APP_VERSION}, ${import.meta.env.VITE_APP_REVISION}`,
       message: error.message,
       metaData: {},
       name: error.name,
-      releaseStage: AppConst.NODE_ENV,
+      releaseStage: import.meta.env.MODE,
       severity: error.name as string | 'error',
       stacktrace: error.stacktrace,
       time: Date.now(),
@@ -224,7 +221,7 @@ class AxiosUtil {
     }
 
     /// 上报错误日志
-    // logApiError(bodyContent);
+    useLog().setLog(bodyContent)
     throw error
   }
 
@@ -232,12 +229,12 @@ class AxiosUtil {
   private handelResponseError<T = any>(error: any, data: any): T {
     // eslint-disable-next-line no-unused-vars
     const bodyContent = {
-      entryName: `${AppConst.SYSTEM_NAME}, ${AppConst.VUE_APP_VERSIONNAME}`,
-      version: `${AppConst.VUE_APP_VERSION}, ${AppConst.VUE_APP_REVISION}`,
+      entryName: `${import.meta.env.VITE_APP_TITLE}, ${import.meta.env.VITE_APP_VERSIONNAME}`,
+      version: `${import.meta.env.VITE_APP_VERSION}, ${import.meta.env.VITE_APP_REVISION}`,
       message: error.message,
       metaData: {},
       name: error.name,
-      releaseStage: AppConst.NODE_ENV,
+      releaseStage: import.meta.env.MODE,
       severity: error.name as string | 'error',
       stacktrace: error.stacktrace,
       time: Date.now(),
@@ -259,8 +256,9 @@ class AxiosUtil {
       fileName: location.href,
       pageLevel: null
     }
+
     /// 上报错误日志
-    // logApiError(bodyContent);
+    useLog().setLog(bodyContent)
     throw error
   }
 }

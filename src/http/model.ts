@@ -18,7 +18,7 @@ export enum HttpMethod {
   DELETE = 'DELETE'
 }
 
-export interface ApiResult {
+export interface ResponseResult {
   time: string
   data: Record<any, any>
 }

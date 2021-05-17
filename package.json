@@ -9,7 +9,9 @@
     "format": "prettier --write ./src",
     "lint": "eslint ./src --ext .vue,.js,.ts,.jsx,.tsx",
     "lint-fix": "eslint --fix ./src --ext .vue,.js,.ts,.jsx,.tsx",
-    "test": "jest"
+    "test": "jest",    
+    "qat": "vite build --mode test",
+    "release": "vite build --mode production"
   },
   "dependencies": {
     "axios": "^0.21.1",

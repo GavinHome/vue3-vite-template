@@ -1,50 +1,55 @@
 <template>
-  <Menu
-    mode="horizontal"
-    :selectedKeys="selectedKeys"
-    :openKeys="openKeys"
-    @click="click"
-    @openChange="openChange"
-  >
+  <a-menu mode="horizontal" v-model="selectedKeys" @click="click">
     <a-menu-item v-for="item in menus" :key="item.key">
-      <span>{{ item.title }}</span>
+      {{ item.title }}
     </a-menu-item>
-  </Menu>
+  </a-menu>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, onMounted, reactive, watch, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
-import { Menu } from 'ant-design-vue'
 import RouterConst from '../router/const'
 
 export default defineComponent({
   name: 'Header',
-  components: { Menu },
-  setup() {
+  setup(): any {
+    const router = useRouter()
+
     const menus: Array<any> = reactive([
-      { key: RouterConst.ROUTER_DASHBOARD, title: 'Home' },
+      { key: RouterConst.ROUTER_HOME, title: 'Home' },
       { key: RouterConst.ROUTER_ABOUT, title: 'About' }
     ])
-
-    const selectedKeys: Array<string> = reactive([])
-    const openKeys: string[] = reactive([])
-
-    const router = useRouter()
+    const selectedKeys: Array<string> = []
     const click = async (params: { key: string }) => {
       await router.push({ name: params.key })
     }
+    const state = reactive({ selectedKeys, menus, click })
 
-    const openChange = async () => {
-      // this.openKeys = openKeys;
+    const activeNav = (path: string) => {
+      const name = path.replace('/', '')
+      if (state.menus.find((x) => x.key === name)) {
+        state.selectedKeys = [name]
+      } else {
+        state.selectedKeys = [RouterConst.ROUTER_HOME]
+      }
     }
 
+    watch(
+      () => router.currentRoute.value,
+      (_n) => {
+        activeNav(_n.path)
+      }
+    )
+
+    onMounted(() => {
+      router.isReady().then(() => {
+        activeNav(router.currentRoute.value.path)
+      })
+    })
+
     return {
-      menus,
-      selectedKeys,
-      openKeys,
-      click,
-      openChange
+      ...toRefs(state)
     }
   }
 })

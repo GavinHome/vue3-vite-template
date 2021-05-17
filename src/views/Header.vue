@@ -1,5 +1,5 @@
 <template>
-  <a-menu mode="horizontal" v-model="selectedKeys" @click="click">
+  <a-menu mode="horizontal" :selectedKeys="selectedKeys" @click="click">
     <a-menu-item v-for="item in menus" :key="item.key">
       {{ item.title }}
     </a-menu-item>
@@ -16,10 +16,10 @@ export default defineComponent({
   setup(): any {
     const router = useRouter()
 
-    const menus: Array<any> = reactive([
+    const menus: Array<any> = [
       { key: RouterConst.ROUTER_HOME, title: 'Home' },
       { key: RouterConst.ROUTER_ABOUT, title: 'About' }
-    ])
+    ]
     const selectedKeys: Array<string> = []
     const click = async (params: { key: string }) => {
       await router.push({ name: params.key })

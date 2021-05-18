@@ -36,7 +36,7 @@ export default ({ mode }) => {
         ]
       })
     ],
-    base: `${loadEnv(mode, process.cwd()).VITE_APP_BASE_URL}`,
+    // base: `${loadEnv(mode, process.cwd()).VITE_APP_BASE_URL}`,
     css: {
       preprocessorOptions: {
         less: {

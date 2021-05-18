@@ -7,6 +7,7 @@ import { resolve } from 'path'
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   const target = loadEnv(mode, process.cwd()).VITE_APP_API_HOST
+  const baseUrl = loadEnv(mode, process.cwd()).VITE_APP_BASE_URL || ''
   return defineConfig({
     plugins: [
       vue(),
@@ -37,6 +38,7 @@ export default ({ mode }) => {
       })
     ],
     // base: `${loadEnv(mode, process.cwd()).VITE_APP_BASE_URL}`,
+    base: baseUrl,
     css: {
       preprocessorOptions: {
         less: {

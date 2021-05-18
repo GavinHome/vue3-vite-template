@@ -1,6 +1,6 @@
 import {
   createRouter,
-  createWebHistory,
+  createWebHashHistory,
   NavigationGuardNext,
   RouteLocationNormalized,
   Router,
@@ -77,7 +77,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router: Router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 })
 

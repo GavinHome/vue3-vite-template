@@ -32,7 +32,7 @@ jobs:
         run: yarn build
 
       - name: CNAME
-        run: echo "gavinhome.github.io/vue3-vite-template/" >> CNAME
+        run: echo "gavinhome.github.io/vue3-vite-template/" >> dist/CNAME
 
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3

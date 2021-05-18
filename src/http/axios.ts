@@ -54,6 +54,7 @@ const setToken = async (config: AxiosRequestConfig) => {
 }
 
 const apiHost = import.meta.env.PROD ? (import.meta.env.VITE_APP_API_HOST as string) : '/api'
+// const apiHost = import.meta.env.VITE_APP_API_HOST as string
 
 const axiosInstance = axios.create({
   baseURL: apiHost,

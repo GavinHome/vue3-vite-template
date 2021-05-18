@@ -40,11 +40,19 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
-        path: `/input`,
-        name: `input`,
-        component: () => import('@/views/Test.vue'),
+        path: `/counter`,
+        name: `counter`,
+        component: () => import('@/views/Counter.vue'),
         meta: {
-          title: `input`
+          title: `counter`
+        }
+      },
+      {
+        path: `/axios`,
+        name: `axios`,
+        component: () => import('@/views/Axios.vue'),
+        meta: {
+          title: `axios`
         }
       }
     ]

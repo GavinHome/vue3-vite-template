@@ -10,6 +10,9 @@ const setLog = (error: any): void => {
   }
 
   axios.post<ApiResult<any>>(`${ApiConst.API_LOG_INDEX}`, error)
+  // .catch((e) => {
+  //   console.log('error ', e)
+  // })
 }
 
 const useLog = () => {

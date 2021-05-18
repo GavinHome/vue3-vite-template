@@ -5,11 +5,7 @@ import {
   Layout,
   Modal,
   Icon,
-  Card,
-  List,
-  Spin,
-  Tooltip,
-  ConfigProvider,
+  // List,
   Menu
 } from 'ant-design-vue'
 // import moment from 'moment'
@@ -27,11 +23,7 @@ app.use(Row)
 app.use(Layout)
 app.use(Modal)
 app.use(Icon)
-app.use(Card)
-app.use(List)
-app.use(Spin)
-app.use(Tooltip)
-app.use(ConfigProvider)
+// app.use(List)
 app.use(Menu)
 
 app.use(router).use(store).mount('#app')

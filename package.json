@@ -11,7 +11,8 @@
     "lint-fix": "eslint --fix ./src --ext .vue,.js,.ts,.jsx,.tsx",
     "test": "jest",
     "qat": "vite build --mode test",
-    "release": "vite build --mode production"
+    "release": "vite build --mode production",
+    "deploy": "vite build --mode deploy"
   },
   "dependencies": {
     "ant-design-vue": "^2.1.6",

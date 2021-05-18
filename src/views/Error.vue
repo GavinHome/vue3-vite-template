@@ -1,6 +1,5 @@
 <template>
   <div class="error">
-    <!-- <errorSvg class="svg" /> -->
     <img :src="errorSvg" alt="error" />
     <div class="content">
       <h1>出错了</h1>

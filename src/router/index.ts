@@ -20,17 +20,32 @@ const routes: Array<RouteRecordRaw> = [
     path: `/`,
     name: RouterConst.ROUTER_DASHBOARD,
     component: Home,
-    redirect: `${RouterConst.ROUTER_HOME}`,
+    // redirect: `${RouterConst.ROUTER_HOME}`,
     children: [
       {
-        path: `/${RouterConst.ROUTER_HOME}`,
+        // path: `/${RouterConst.ROUTER_HOME}`,
+        path: ``,
         name: RouterConst.ROUTER_HOME,
-        component: () => import('@/views/Dashboard.vue')
+        component: () => import('@/views/Dashboard.vue'),
+        meta: {
+          title: `home`
+        }
       },
       {
         path: `/${RouterConst.ROUTER_ABOUT}`,
         name: RouterConst.ROUTER_ABOUT,
-        component: () => import('@/views/About.vue')
+        component: () => import('@/views/About.vue'),
+        meta: {
+          title: `about`
+        }
+      },
+      {
+        path: `/input`,
+        name: `input`,
+        component: () => import('@/views/Test.vue'),
+        meta: {
+          title: `input`
+        }
       }
     ]
   },

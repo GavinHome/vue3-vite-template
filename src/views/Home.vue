@@ -1,12 +1,13 @@
 <template>
   <a-layout style="height: 100%">
     <Header />
-    <a-layout-content class="content">
-      <div class="contentBox">
-        <!-- <transition name="fade">
-          <router-view />
-        </transition> -->
-        <router-view />
+    <a-layout-content>
+      <div class="content">
+        <router-view v-slot="{ Component }">
+          <keep-alive :include="['Dashboard', 'Test']">
+            <component :is="Component" />
+          </keep-alive>
+        </router-view>
       </div>
     </a-layout-content>
   </a-layout>
@@ -17,7 +18,7 @@ import { defineComponent } from 'vue'
 import Header from '@/views/Header.vue'
 
 export default defineComponent({
-  name: 'App',
+  name: 'Home',
   components: {
     Header
   }

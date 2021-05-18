@@ -18,7 +18,8 @@ export default defineComponent({
 
     const menus: Array<any> = [
       { key: RouterConst.ROUTER_HOME, title: 'Home' },
-      { key: RouterConst.ROUTER_ABOUT, title: 'About' }
+      { key: RouterConst.ROUTER_ABOUT, title: 'About' },
+      { key: `input`, title: 'Test' }
     ]
     const selectedKeys: Array<string> = []
     const click = async (params: { key: string }) => {

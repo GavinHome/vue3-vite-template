@@ -1,9 +1,9 @@
 <template>
-  <div id="app" v-cloak>
-    <router-view v-slot="{ Component }">
-      <component :is="Component" />
-    </router-view>
-  </div>
+  <!-- <div id="app" v-cloak> -->
+  <router-view v-slot="{ Component }">
+    <component :is="Component" />
+  </router-view>
+  <!-- </div> -->
 </template>
 
 <script lang="ts">

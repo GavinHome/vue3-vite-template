@@ -12,7 +12,7 @@
     "test": "jest",
     "qat": "vite build --mode test",
     "release": "vite build --mode production",
-    "gh-pages": "vite build --mode gh"
+    "gh-pages": "vite build --base=/vue3-vite-template/"
   },
   "dependencies": {
     "ant-design-vue": "^2.1.6",

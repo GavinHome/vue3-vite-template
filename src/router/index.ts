@@ -1,6 +1,6 @@
 import {
   createRouter,
-  createWebHashHistory,
+  createWebHistory,
   NavigationGuardNext,
   RouteLocationNormalized,
   Router,
@@ -9,7 +9,6 @@ import {
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import Home from '@/views/Home.vue'
-import { defineAsyncComponent } from 'vue'
 import RouterConst from './const'
 import { useCheckToken } from '../hook/user'
 import { MessageConst, TokenConst } from '../common/const'
@@ -27,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
         path: `/${RouterConst.ROUTER_HOME}`,
         // path: ``,
         name: RouterConst.ROUTER_HOME,
-        component: defineAsyncComponent(() => import('@/views/Dashboard.vue')),
+        component: () => import('@/views/Dashboard.vue'),
         meta: {
           title: `home`
         }
@@ -35,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: `/${RouterConst.ROUTER_ABOUT}`,
         name: RouterConst.ROUTER_ABOUT,
-        component: defineAsyncComponent(() => import('@/views/About.vue')),
+        component: () => import('@/views/About.vue'),
         meta: {
           title: `about`
         }
@@ -43,7 +42,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: `/counter`,
         name: `counter`,
-        component: defineAsyncComponent(() => import('@/views/Counter.vue')),
+        component: () => import('@/views/Counter.vue'),
         meta: {
           title: `counter`
         }
@@ -51,7 +50,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: `/axios`,
         name: `axios`,
-        component: defineAsyncComponent(() => import('@/views/Axios.vue')),
+        component: () => import('@/views/Axios.vue'),
         meta: {
           title: `axios`
         }
@@ -61,7 +60,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: `/${RouterConst.ROUTER_LOGIN}`,
     name: RouterConst.ROUTER_LOGIN,
-    component: defineAsyncComponent(() => import('@/views/Login.vue')),
+    component: () => import('@/views/Login.vue'),
     meta: {
       auth: false
     }
@@ -69,7 +68,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: `/${RouterConst.ROUTER_ERROR}`,
     name: RouterConst.ROUTER_ERROR,
-    component: defineAsyncComponent(() => import('@/views/Error.vue')),
+    component: () => import('@/views/Error.vue'),
     meta: {
       auth: false
     }
@@ -77,7 +76,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router: Router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 

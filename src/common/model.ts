@@ -12,19 +12,19 @@ export interface UserAuthModel {
   tokenExpiration: number
 }
 
-// export interface PagedResult<T> {
-//   took: number // 耗费时间
-//   pageIndex: number // 查询页
-//   pageSize: number // 每页数量
-//   totalPage: number // 总共页数量
-//   totalCount: number // 总共数据数量
-//   pageResults: Array<T> // 数据内容
-// }
+// page result
+export interface PagedResult<T> {
+  took: number // take time
+  pageIndex: number
+  pageSize: number
+  totalPage: number
+  totalCount: number
+  pageResults: Array<T>
+}
 
-// // 分页查询
-// export interface PageQuery {
-//   pageIndex: number // 查询页
-//   pageSize: number // 每页数量
-//   searchText: string // 搜索内容
-//   // totalCount?: number; // 总共数量
-// }
+// page query
+export interface PageQuery {
+  pageIndex: number
+  pageSize: number
+  searchText: string
+}

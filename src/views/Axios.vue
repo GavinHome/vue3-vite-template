@@ -12,8 +12,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'
 import { Card } from 'ant-design-vue'
-import { ApiConst } from '../common/api'
-import { useAxios } from '../hook'
+import { apiAxiosUser } from '../api'
 
 export default defineComponent({
   name: 'Axios',
@@ -25,7 +24,7 @@ export default defineComponent({
     })
     const fetch = async (): Promise<void> => {
       state.loading = true
-      const res = await useAxios().get(ApiConst.API_AXIOS_USER, {}, false)
+      const res = await apiAxiosUser()
       state.userInfo = res
       state.loading = false
     }

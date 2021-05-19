@@ -1,34 +1,22 @@
 // Token Const
 export const TokenConst = {
-  NO_LOGIN: 'NO_LOGIN', // 尚未登录系统
-  NO_TOKEN: 'NO_TOKEN', // TOKEN过期
-  TOKEN_REFRESH: 300 // token滑动刷新时间, 单位为秒, 用户活跃则刷新token时间
+  NO_LOGIN: 'NO_LOGIN',
+  NO_TOKEN: 'NO_TOKEN',
+  TOKEN_REFRESH: 300
 }
 
-// const { t } = useI18n()
+// API
+export const ApiConst = {
+  API_LOGIN: 'api/v1/user/login',
+  API_REFRESH_TOKEN: 'api/v1/user/refresh',
+  API_LOG_INDEX: 'api/v1/log/index',
+  API_AXIOS_USER: '/users/GavinHome'
+}
 
-// Message Const
-export const MessageConst = {
-  // TOKEN_EXPIRE_MSG: '登录已过期，请重新登录',
-  // AUTO_LOGIN_FAIL_MESSAGE: '系统登录错误',
-  // LOGIN_FAIL_MESSAGE: '用户名或密码错误',
-  // LOGIN_SUCCESS_MESSAGE: '登录成功',
-  // SYMBOL_LINEBREAKER: '\n\n',
-  // SYMBOL_QUESTIONMARK: ' ？',
-  // SERVER_DATA_ERROR: '获取数据错误，请稍后重试',
-  // OK_TEXT: '确认',
-  // CANCEL_TEXT: '取消',
-  // DELETE_TITLE: '删除',
-  // DELETE_CONTENT: '您确认要删除吗？'
-  // TOKEN_EXPIRE_MSG: t('TOKEN_EXPIRE_MSG'),
-  // AUTO_LOGIN_FAIL_MESSAGE: t('AUTO_LOGIN_FAIL_MESSAGE'),
-  // LOGIN_FAIL_MESSAGE: t('LOGIN_FAIL_MESSAGE'),
-  // LOGIN_SUCCESS_MESSAGE: t('LOGIN_SUCCESS_MESSAGE'),
-  // SYMBOL_LINEBREAKER: '\n\n',
-  // SYMBOL_QUESTIONMARK: ' ？',
-  // SERVER_DATA_ERROR: t('SERVER_DATA_ERROR'),
-  // OK_TEXT: t('OK_TEXT'),
-  // CANCEL_TEXT: t('CANCEL_TEXT'),
-  // DELETE_TITLE: t('DELETE_TITLE'),
-  // DELETE_CONTENT: t('DELETE_CONTENT')
+// no token apis
+export const NO_TOKEN_APIS = [ApiConst.API_LOGIN, ApiConst.API_AXIOS_USER, ApiConst.API_LOG_INDEX]
+
+// is need token
+export const VERIFY_NEED_TOKEN = (url: string) => {
+  return url && NO_TOKEN_APIS.every((x) => x !== url)
 }

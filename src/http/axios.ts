@@ -1,6 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { ApiConst, VERIFY_NEED_TOKEN } from '../common/api'
-// import { MessageConst } from '../common/const'
 import useLog from '../hook/log'
 import useMessage from '../hook/message'
 import useUser from '../hook/user'
@@ -10,6 +8,7 @@ import { getUrlWithOutParams } from '../utils'
 import { ResponseResult, ContentType, HttpMethod } from './model'
 
 import i18n from '../language'
+import { ApiConst, VERIFY_NEED_TOKEN } from '../common/const'
 
 const { t } = i18n.global
 

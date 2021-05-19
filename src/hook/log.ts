@@ -1,7 +1,5 @@
-import { ApiConst } from '../common/api'
-import { ApiResult } from '../common/model'
-import useAxios from './axios'
 import useUser from './user'
+import { apiLogError } from '../api'
 
 const setLog = (error: any, data?: any): void => {
   // eslint-disable-next-line no-unused-vars
@@ -35,8 +33,8 @@ const setLog = (error: any, data?: any): void => {
     fileName: location.href,
     pageLevel: null
   }
-  const axios = useAxios()
-  axios.post<ApiResult<any>>(`${ApiConst.API_LOG_INDEX}`, bodyContent)
+
+  apiLogError(bodyContent)
 }
 
 const useLog = () => {

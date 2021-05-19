@@ -1,14 +1,9 @@
 import moment from 'moment'
-import { ApiConst } from '../common/api'
+import { apiRefreshToken } from '../api'
 import { TokenConst } from '../common/const'
-import { ApiResult, UserAuthModel } from '../common/model'
+import { UserAuthModel } from '../common/model'
 import store from '../store'
 import { SIGN, SIGNOUT } from '../store/types'
-import useAxios from './axios'
-
-const apiRefreshToken = (): Promise<ApiResult<UserAuthModel>> => {
-  return useAxios().post<ApiResult<UserAuthModel>>(`${ApiConst.API_REFRESH_TOKEN}`)
-}
 
 const getUser = (): UserAuthModel => {
   return store.state.user as UserAuthModel

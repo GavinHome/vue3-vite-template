@@ -7,3 +7,4 @@ import useConfirmModal from './confirm'
 const hook = { useAxios, useLog, useUser, useMessage, useConfirmModal }
 
 export default hook
+export { useAxios, useLog, useUser, useMessage, useConfirmModal }

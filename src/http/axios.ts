@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { ApiConst, VERIFY_NEED_TOKEN } from '../common/api'
-import { MessageConst } from '../common/const'
+// import { MessageConst } from '../common/const'
 import useLog from '../hook/log'
 import useMessage from '../hook/message'
 import useUser from '../hook/user'
@@ -8,6 +8,10 @@ import router from '../router'
 import RouterConst from '../router/const'
 import { getUrlWithOutParams } from '../utils'
 import { ResponseResult, ContentType, HttpMethod } from './model'
+
+import i18n from '../language'
+
+const { t } = i18n.global
 
 interface AxiosOption extends AxiosRequestConfig {
   contentType?: ContentType
@@ -32,7 +36,7 @@ const setToken = async (config: AxiosRequestConfig) => {
           config.headers.Authorization = `Bearer ${token}`
         })
         .catch(() => {
-          useMessage().openWarnMsg(MessageConst.TOKEN_EXPIRE_MSG)
+          useMessage().openWarnMsg(t('TOKEN_EXPIRE_MSG'))
           router.replace({
             name: RouterConst.ROUTER_LOGIN,
             params: { redirect: router.currentRoute.value.fullPath }

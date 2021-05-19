@@ -1,13 +1,17 @@
 import { Modal } from 'ant-design-vue'
-import { MessageConst } from '../common/const'
+import i18n from '../language'
 
-const OkText = MessageConst.OK_TEXT
-const CancelText = MessageConst.CANCEL_TEXT
+const { t } = i18n.global
+
+const OkText = t('OK_TEXT')
+const CancelText = t('CANCEL_TEXT')
+const DeleteTitle = t('DELETE_TITLE')
+const DeleteContent = t('DELETE_CONTENT')
 
 export const openDeleteModal = (
   onOk: () => void,
-  title = MessageConst.DELETE_TITLE,
-  content = MessageConst.DELETE_CONTENT,
+  title = DeleteTitle,
+  content = DeleteContent,
   onCancel?: () => void,
   okText = OkText,
   cancelText = CancelText

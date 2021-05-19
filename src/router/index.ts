@@ -10,9 +10,11 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import Home from '@/views/Home.vue'
 import RouterConst from './const'
-import { MessageConst, TokenConst } from '../common/const'
-import useMessage from '../hook/message'
-import useUser from '../hook/user'
+import { TokenConst } from '../common/const'
+import i18n from '../language'
+import { useMessage, useUser } from '../hook'
+
+const { t } = i18n.global
 
 NProgress.configure({ showSpinner: false })
 const routes: Array<RouteRecordRaw> = [
@@ -96,7 +98,7 @@ router.beforeEach(
         })
         .catch((error) => {
           if (error === TokenConst.NO_TOKEN) {
-            useMessage().openWarnMsg(MessageConst.TOKEN_EXPIRE_MSG)
+            useMessage().openWarnMsg(t('TOKEN_EXPIRE_MSG'))
           }
           next({
             name: RouterConst.ROUTER_LOGIN,

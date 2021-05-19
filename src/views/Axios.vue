@@ -13,7 +13,7 @@
 import { defineComponent, reactive, toRefs } from 'vue'
 import { Card } from 'ant-design-vue'
 import { ApiConst } from '../common/api'
-import useAxios from '../hook/axios'
+import { useAxios } from '../hook'
 
 export default defineComponent({
   name: 'Axios',

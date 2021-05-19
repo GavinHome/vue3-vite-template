@@ -47,11 +47,11 @@ const setToken = async (config: AxiosRequestConfig) => {
   }
 }
 
-/// 打开错误页面
+/// Go to error page
 const setError = (error: any) =>
   router.replace({ name: RouterConst.ROUTER_ERROR, params: { msg: error } })
 
-/// 上报错误日志
+/// report error
 const logError = (error: any, data: any) => useLog().setLog(error, data)
 
 const apiHost = import.meta.env.PROD ? (import.meta.env.VITE_APP_API_HOST as string) : '/api'

@@ -16,5 +16,10 @@ export const MessageConst = {
   SYMBOL_LINEBREAKER: '\n\n',
   SYMBOL_QUESTIONMARK: ' ？',
 
-  SERVER_DATA_ERROR: '获取数据错误，请稍后重试'
+  SERVER_DATA_ERROR: '获取数据错误，请稍后重试',
+
+  OK_TEXT: '确认',
+  CANCEL_TEXT: '取消',
+  DELETE_TITLE: '删除',
+  DELETE_CONTENT: '您确认要删除吗？'
 }

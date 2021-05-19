@@ -10,9 +10,9 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import Home from '@/views/Home.vue'
 import RouterConst from './const'
-import { useCheckToken } from '../hook/user'
 import { MessageConst, TokenConst } from '../common/const'
 import useMessage from '../hook/message'
+import useUser from '../hook/user'
 
 NProgress.configure({ showSpinner: false })
 const routes: Array<RouteRecordRaw> = [
@@ -89,7 +89,8 @@ router.beforeEach(
     }
 
     if (to.meta && to.meta.auth) {
-      useCheckToken()
+      useUser()
+        .checkToken()
         .then(() => {
           next()
         })

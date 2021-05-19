@@ -1,8 +1,7 @@
 <template>
-  <!-- <router-view v-slot="{ Component }">
+  <router-view v-slot="{ Component }">
     <component :is="Component" />
-  </router-view> -->
-  <router-view />
+  </router-view>
 </template>
 
 <script lang="ts">
@@ -21,6 +20,5 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /* margin-top: 60px; */
 }
 </style>

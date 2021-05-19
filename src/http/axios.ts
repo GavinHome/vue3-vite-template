@@ -1,9 +1,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { ApiConst, NO_TOKEN_APIS } from '../common/api'
+import { ApiConst, VERIFY_NEED_TOKEN } from '../common/api'
 import { MessageConst } from '../common/const'
+import useLog from '../hook/log'
 import useMessage from '../hook/message'
-import { useUser } from '../hook/user'
-import { useLog } from '../hook/log'
+import useUser from '../hook/user'
 import router from '../router'
 import RouterConst from '../router/const'
 import { getUrlWithOutParams } from '../utils'
@@ -19,42 +19,42 @@ const setToken = async (config: AxiosRequestConfig) => {
   })
 
   const outParamsUrl = getUrlWithOutParams(config.url)
-  if (config.url && NO_TOKEN_APIS.every((x) => x !== outParamsUrl)) {
-    const user = useUser()
+  if (VERIFY_NEED_TOKEN(outParamsUrl)) {
     if (outParamsUrl === ApiConst.API_REFRESH_TOKEN) {
       if (!config.headers.Authorization) {
+        const user = useUser().getUser()
         config.headers.Authorization = `Bearer ${user.token}`
       }
     } else {
-      try {
-        config.headers.Authorization = `Bearer ${user.token}`
-      } catch (e) {
-        useMessage().openWarnMsg(MessageConst.TOKEN_EXPIRE_MSG)
-        await router.replace({
-          name: RouterConst.ROUTER_LOGIN,
-          params: { redirect: router.currentRoute.value.fullPath }
+      useUser()
+        .checkToken()
+        .then((token: string) => {
+          config.headers.Authorization = `Bearer ${token}`
         })
-      }
+        .catch(() => {
+          useMessage().openWarnMsg(MessageConst.TOKEN_EXPIRE_MSG)
+          router.replace({
+            name: RouterConst.ROUTER_LOGIN,
+            params: { redirect: router.currentRoute.value.fullPath }
+          })
+        })
     }
   }
 
-  if (config.method === 'get') {
-    if (!config.params) {
-      Object.assign(config, {
-        params: {
-          timestamp: new Date().getTime()
-        }
-      })
-    } else {
-      Object.assign(config.params, {
-        timestamp: new Date().getTime()
-      })
-    }
+  if (config.method === HttpMethod.GET.toLowerCase()) {
+    config.params = config.params || {}
+    Object.assign(config.params, { timestamp: new Date().getTime() })
   }
 }
 
+/// 打开错误页面
+const setError = (error: any) =>
+  router.replace({ name: RouterConst.ROUTER_ERROR, params: { msg: error } })
+
+/// 上报错误日志
+const logError = (error: any, data: any) => useLog().setLog(error, data)
+
 const apiHost = import.meta.env.PROD ? (import.meta.env.VITE_APP_API_HOST as string) : '/api'
-// const apiHost = import.meta.env.VITE_APP_API_HOST as string
 
 const axiosInstance = axios.create({
   baseURL: apiHost,
@@ -82,7 +82,7 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     if (error && error.toString().indexOf('500') > 0) {
-      router.replace({ name: RouterConst.ROUTER_ERROR, params: { msg: error } })
+      setError(error)
     }
     return Promise.reject(error)
   }
@@ -160,107 +160,37 @@ class AxiosUtil {
     return this.handelResponse<T>(res, convertResult)
   }
 
-  public handelResponse<T = any>(
-    res: AxiosResponse,
-    convertResult = true,
-    showErrorMsg = false
-  ): T {
+  private handelResponse<T = any>(res: AxiosResponse, convertResult = true): T {
     try {
       if (res.status === 200) {
-        const apiReturn = res.data as ResponseResult
-
         if (convertResult) {
+          const apiReturn = res.data as ResponseResult
           if (apiReturn.data.isSuccess === false) {
             const errorMsg = apiReturn.data.message
-            router.replace({ name: RouterConst.ROUTER_ERROR, params: { msg: errorMsg } })
+            setError(errorMsg)
           }
           return apiReturn.data as T
         }
         return res.data as T
       }
-      router.replace({ name: RouterConst.ROUTER_ERROR, params: { msg: res.statusText } })
+
+      setError(res.statusText)
       const error = new Error(res.statusText)
-      this.handelResponseError(error, res)
-      throw new Error()
+      return this.handelResponseError(error, res)
     } catch (e) {
-      if (showErrorMsg) {
-        useMessage().openErrorMsg(MessageConst.SERVER_DATA_ERROR)
-      }
-      this.handelResponseError(e, res)
-      throw e
+      return this.handelResponseError(e, res)
     }
   }
 
   // eslint-disable-next-line class-methods-use-this
   private handelResquestError<T = any>(error: any): T {
-    // eslint-disable-next-line no-unused-vars
-    const bodyContent = {
-      entryName: `${import.meta.env.VITE_APP_TITLE}, ${import.meta.env.VITE_APP_VERSIONNAME}`,
-      version: `${import.meta.env.VITE_APP_VERSION}, ${import.meta.env.VITE_APP_REVISION}`,
-      message: error.message,
-      metaData: {},
-      name: error.name,
-      releaseStage: import.meta.env.MODE,
-      severity: error.name as string | 'error',
-      stacktrace: error.stacktrace,
-      time: Date.now(),
-      title: 'handle request error',
-      type: `HTTP Request`,
-      // eslint-disable-next-line no-restricted-globals
-      url: location.href,
-      client: {
-        userAgent: window.navigator.userAgent,
-        height: window.screen.height,
-        width: window.screen.width,
-        referrer: window.document.referrer
-      },
-      error,
-      lineNumber: null,
-      columnNumber: null,
-      // eslint-disable-next-line no-restricted-globals
-      fileName: location.href,
-      pageLevel: null
-    }
-
-    /// 上报错误日志
-    useLog().setLog(bodyContent)
+    logError(error, null)
     throw error
   }
 
   // eslint-disable-next-line class-methods-use-this
   private handelResponseError<T = any>(error: any, data: any): T {
-    // eslint-disable-next-line no-unused-vars
-    const bodyContent = {
-      entryName: `${import.meta.env.VITE_APP_TITLE}, ${import.meta.env.VITE_APP_VERSIONNAME}`,
-      version: `${import.meta.env.VITE_APP_VERSION}, ${import.meta.env.VITE_APP_REVISION}`,
-      message: error.message,
-      metaData: {},
-      name: error.name,
-      releaseStage: import.meta.env.MODE,
-      severity: error.name as string | 'error',
-      stacktrace: error.stacktrace,
-      time: Date.now(),
-      title: 'handle response error',
-      type: `HTTP Response`,
-      // eslint-disable-next-line no-restricted-globals
-      url: location.href,
-      client: {
-        userAgent: window.navigator.userAgent,
-        height: window.screen.height,
-        width: window.screen.width,
-        referrer: window.document.referrer
-      },
-      data,
-      error,
-      lineNumber: null,
-      columnNumber: null,
-      // eslint-disable-next-line no-restricted-globals
-      fileName: location.href,
-      pageLevel: null
-    }
-
-    /// 上报错误日志
-    useLog().setLog(bodyContent)
+    logError(error, data)
     throw error
   }
 }

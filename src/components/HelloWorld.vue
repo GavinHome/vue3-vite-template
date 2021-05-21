@@ -29,27 +29,20 @@
   </p>
 </template>
 
-<script lang="ts">
-import { ref, defineComponent } from 'vue'
+<script setup lang="ts">
+import { ref, defineProps } from 'vue'
 import { Button } from 'ant-design-vue'
 
-export default defineComponent({
-  name: 'HelloWorld',
-  components: { Button },
-  props: {
-    msg: {
-      type: String,
-      required: true
-    }
-  },
-  setup: () => {
-    const count = ref(0)
-    return { count }
+defineProps({
+  msg: {
+    type: String,
+    required: true
   }
 })
+const count = ref(0)
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
 a {
   color: #42b983;
 }

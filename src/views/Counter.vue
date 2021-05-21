@@ -6,17 +6,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
 
-export default defineComponent({
-  name: 'Counter',
-  setup() {
-    const count = ref<number>(0)
-    const increment = () => {
-      count.value += 1
-    }
-    return { count, increment }
-  }
-})
+const count = ref<number>(0)
+
+const increment = () => {
+  count.value += 1
+}
 </script>

@@ -2,7 +2,6 @@ import useUser from './user'
 import { apiLogError } from '../api'
 
 const setLog = (error: any, data?: any): void => {
-  // eslint-disable-next-line no-unused-vars
   const bodyContent = {
     entryName: `${import.meta.env.VITE_APP_TITLE}, ${import.meta.env.VITE_APP_VERSIONNAME}`,
     version: `${import.meta.env.VITE_APP_VERSION}, ${import.meta.env.VITE_APP_REVISION}`,

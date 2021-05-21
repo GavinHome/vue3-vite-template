@@ -2,14 +2,8 @@
   <input v-model="msg" />
 </template>
 
-<script lang="ts">
-import { ref, defineComponent } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
 
-export default defineComponent({
-  name: 'Test',
-  setup: () => {
-    const msg = ref('test')
-    return { msg }
-  }
-})
+const msg = ref('test')
 </script>

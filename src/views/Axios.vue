@@ -1,36 +1,34 @@
 <template>
   <div class="axios">
-    <Card title="Axios Test" style="width: 480px" :loading="loading" hoverable>
+    <Card title="Axios Test" class="card" :loading="state.loading" hoverable>
       <template #extra><a @click="fetch">点击获取信息</a></template>
-      <p>name: {{ userInfo?.name }}</p>
-      <p>type: {{ userInfo?.type }}</p>
-      <p>url: {{ userInfo?.html_url }}</p>
+      <p>name: {{ state.userInfo ? state.userInfo.name : '' }}</p>
+      <p>type: {{ state.userInfo ? state.userInfo.type : '' }}</p>
+      <p>url: {{ state.userInfo ? state.userInfo.html_url : '' }}</p>
     </Card>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+<script setup lang="ts">
+import { reactive } from 'vue'
 import { Card } from 'ant-design-vue'
 import { apiAxiosUser } from '../api'
 
-export default defineComponent({
-  name: 'Axios',
-  components: { Card },
-  setup() {
-    const state = reactive({
-      loading: false,
-      userInfo: null
-    })
-    const fetch = async (): Promise<void> => {
-      state.loading = true
-      const res = await apiAxiosUser()
-      state.userInfo = res
-      state.loading = false
-    }
-    return { ...toRefs(state), fetch }
+const state = reactive({
+  loading: false,
+  userInfo: {
+    name: '',
+    type: '',
+    html_url: ''
   }
 })
+
+const fetch = async (): Promise<void> => {
+  state.loading = true
+  const res = await apiAxiosUser()
+  state.userInfo = res
+  state.loading = false
+}
 </script>
 
 <style lang="stylus" scoped>
@@ -38,5 +36,9 @@ export default defineComponent({
     justify-content: center;
     padding: 20px;
     display: flex;
+
+    .card {
+      width: 480px
+    }
 }
 </style>

@@ -3,14 +3,6 @@
   <HelloWorld msg="Welcome to Your Vue 3 + TypeScript + Vite App" />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import HelloWorld from '@/components/HelloWorld.vue'
-
-export default defineComponent({
-  name: 'Dashboard',
-  components: {
-    HelloWorld
-  }
-})
 </script>

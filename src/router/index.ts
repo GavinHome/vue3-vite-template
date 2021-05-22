@@ -8,7 +8,7 @@ import {
 } from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import Home from '@/views/Home.vue'
+// import Home from '@/views/Home.vue'
 import RouterConst from './const'
 import { TokenConst } from '../common/const'
 import i18n from '../language'
@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: `/`,
     name: RouterConst.ROUTER_DASHBOARD,
-    component: Home,
+    component: () => import('@/views/Home.vue'),
     redirect: `${RouterConst.ROUTER_HOME}`,
     children: [
       {

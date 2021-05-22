@@ -3,6 +3,8 @@ import vue from '@vitejs/plugin-vue'
 import styleImport from 'vite-plugin-style-import'
 import createImportPlugin from 'vite-plugin-import'
 import { resolve } from 'path'
+import { VitePWA } from 'vite-plugin-pwa'
+import viteCompression from 'vite-plugin-compression'
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -35,22 +37,41 @@ export default ({ mode }) => {
             style: 'css'
           }
         ]
+      }),
+      VitePWA({
+        manifest: {},
+        workbox: { skipWaiting: true, clientsClaim: true }
+      }),
+      viteCompression({
+        verbose: true,
+        disable: false,
+        threshold: 10240,
+        algorithm: 'gzip',
+        ext: '.gz'
       })
     ],
     // base: baseUrl,
     css: {
       preprocessorOptions: {
         less: {
+          modifyVars: {
+            // 更改主题在这里
+            // 'primary-color': '#52c41a',
+            // 'link-color': '#1DA57A',
+            // 'border-radius-base': '2px'
+          },
           javascriptEnabled: true
         }
       }
     },
     resolve: {
       alias: {
-        '@': resolve(__dirname, 'src')
+        '@': resolve(__dirname, 'src'),
+        'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js'
       }
     },
     server: {
+      host: '0.0.0.0',
       port: 3001,
       open: true,
       cors: true,
@@ -60,6 +81,14 @@ export default ({ mode }) => {
           changeOrigin: true,
           secure: false,
           rewrite: (path) => path.replace('/api/', '/')
+        }
+      }
+    },
+    build: {
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
         }
       }
     }

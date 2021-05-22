@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, watch, computed, ref } from 'vue'
+import { onMounted, watch, computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import RouterConst from '../router/const'

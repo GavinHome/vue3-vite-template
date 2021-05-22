@@ -1,5 +1,5 @@
 <template>
-  <a-menu mode="horizontal" :selectedKeys="selectedKeys" @click="click">
+  <a-menu mode="horizontal" v-model:selectedKeys="selectedKeys" @click="click">
     <a-menu-item v-for="item in navigators" :key="item.key">
       {{ item.title }}
     </a-menu-item>

@@ -96,7 +96,7 @@ export default ({ mode }) => {
       //     manualChunks: {}
       //   }
       // },
-      chunkSizeWarningLimit: 800
+      chunkSizeWarningLimit: 300
     }
   })
 }

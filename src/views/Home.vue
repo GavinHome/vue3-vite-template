@@ -16,6 +16,10 @@
 
 <script setup lang="ts">
 import Header from '@/views/Header.vue'
+import { Layout } from 'ant-design-vue'
+
+const ALayout = Layout
+const ALayoutContent = Layout.Content
 </script>
 
 <style>

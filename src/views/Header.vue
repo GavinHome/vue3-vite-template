@@ -16,7 +16,13 @@
 import { onMounted, watch, computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { Menu, Select } from 'ant-design-vue'
 import RouterConst from '../router/const'
+
+const AMenu = Menu
+const AMenuItem = Menu.Item
+const ASelect = Select
+const ASelectOption = Select.Option
 
 const router = useRouter()
 const { t } = useI18n()

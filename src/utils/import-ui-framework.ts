@@ -1,8 +1,8 @@
 import { App } from 'vue'
 
-import { Layout, Select, Menu } from 'ant-design-vue'
+import { Row, Col } from 'ant-design-vue'
 
 export default function importUiFramework(app: App) {
-  app.use(Layout).use(Select).use(Menu)
+  app.use(Row).use(Col)
   return app
 }

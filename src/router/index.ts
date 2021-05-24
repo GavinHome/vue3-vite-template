@@ -63,6 +63,14 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: `test`
         }
+      },
+      {
+        path: `/mock`,
+        name: `mock`,
+        component: () => import('@/views/Mock.vue'),
+        meta: {
+          title: `mock`
+        }
       }
     ]
   },

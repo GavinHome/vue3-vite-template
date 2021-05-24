@@ -1,18 +1,25 @@
-import { defineConfig, loadEnv } from 'vite'
+import { ConfigEnv, defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import styleImport from 'vite-plugin-style-import'
 import createImportPlugin from 'vite-plugin-import'
 import { resolve } from 'path'
 import { VitePWA } from 'vite-plugin-pwa'
 import viteCompression from 'vite-plugin-compression'
+import { viteMockServe } from 'vite-plugin-mock'
 
 // https://vitejs.dev/config/
-export default ({ mode }) => {
+export default ({ mode, command }: ConfigEnv) => {
   const target = loadEnv(mode, process.cwd()).VITE_APP_API_HOST
   // const baseUrl = loadEnv(mode, process.cwd()).VITE_APP_BASE_URL || ''
   return defineConfig({
     plugins: [
       vue(),
+      viteMockServe({
+        // ignore: /^\_/,
+        supportTs: true,
+        mockPath: 'mock',
+        localEnabled: command === 'serve'
+      }),
       styleImport({
         libs: [
           {

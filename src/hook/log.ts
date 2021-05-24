@@ -33,7 +33,7 @@ const setLog = (error: any, data?: any): void => {
     pageLevel: null
   }
 
-  useApi().apiLogError(bodyContent)
+  // useApi().apiLogError(bodyContent)
 }
 
 const useLog = () => {

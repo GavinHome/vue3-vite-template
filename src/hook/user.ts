@@ -4,7 +4,7 @@ import { UserAction } from '../store/modules/user/action'
 
 const getUser = (): UserAuthModel => {
   const store = useStore()
-  return store.state.user as UserAuthModel
+  return store?.state?.user as UserAuthModel
 }
 
 const checkToken = (): Promise<any> => {

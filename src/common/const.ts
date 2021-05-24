@@ -1,10 +1,3 @@
-// Token Const
-export const TokenConst = {
-  NO_LOGIN: 'NO_LOGIN',
-  NO_TOKEN: 'NO_TOKEN',
-  TOKEN_REFRESH: 300
-}
-
 // API
 export const ApiConst = {
   API_LOGIN: 'api/v1/user/login',

@@ -3,6 +3,7 @@ export default {
   ROUTER_ABOUT: 'About',
   ROUTER_COUNTER: 'Counter',
   ROUTER_AXIOS: 'Axios',
+  ROUTER_TEST: 'Test',
 
   TOKEN_EXPIRE_MSG: 'Login has expired, please log in again',
 

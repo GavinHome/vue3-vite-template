@@ -1,4 +1,8 @@
-export const SET_USER = 'SET_USER'
-export const CLEAR_USER = 'CLEAR_USER'
-export const SIGNOUT = 'SIGNOUT'
-export const SIGN = 'SIGN'
+import { AppState } from './modules/app/state'
+import { UserState } from './modules/user/state'
+import { RootState } from './state'
+
+export interface AllStateTypes extends RootState {
+  user: UserState
+  app: AppState
+}

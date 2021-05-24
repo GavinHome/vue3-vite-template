@@ -1,5 +1,5 @@
+import useApi from './api'
 import useUser from './user'
-import { apiLogError } from '../api'
 
 const setLog = (error: any, data?: any): void => {
   const bodyContent = {
@@ -33,7 +33,7 @@ const setLog = (error: any, data?: any): void => {
     pageLevel: null
   }
 
-  apiLogError(bodyContent)
+  useApi().apiLogError(bodyContent)
 }
 
 const useLog = () => {

@@ -4,7 +4,7 @@
       {{ item.title }}
     </a-menu-item>
     <div class="lang">
-      <a-select default-value="en-US" @change="switchLangChange">
+      <a-select default-value="en-US" v-model:value="lang" @change="switchLangChange">
         <a-select-option value="en-US"> {{ t('LOCALE_EN') }} </a-select-option>
         <a-select-option value="zh-CN"> {{ t('LOCALE_ZH') }} </a-select-option>
       </a-select>
@@ -13,11 +13,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch, computed, ref } from 'vue'
+import { onMounted, watch, computed, ref, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { Menu, Select } from 'ant-design-vue'
 import RouterConst from '../router/const'
+import { useStore } from '../store'
+import { AppAction } from '../store/modules/app/action'
 
 const AMenu = Menu
 const AMenuItem = Menu.Item
@@ -31,7 +33,8 @@ const navigators = computed(() => [
   { key: RouterConst.ROUTER_HOME, title: t('ROUTER_HOME') },
   { key: RouterConst.ROUTER_ABOUT, title: t('ROUTER_ABOUT') },
   { key: RouterConst.ROUTER_COUNTER, title: t('ROUTER_COUNTER') },
-  { key: RouterConst.ROUTER_AXIOS, title: t('ROUTER_AXIOS') }
+  { key: RouterConst.ROUTER_AXIOS, title: t('ROUTER_AXIOS') },
+  { key: RouterConst.ROUTER_TEST, title: t('ROUTER_TEST') }
 ])
 
 const selectedKeys = ref<Array<string>>([])
@@ -61,8 +64,12 @@ onMounted(() => {
   })
 })
 
+const store = useStore()
+const { lang } = toRefs(store.state.app)
+i18n.locale.value = lang.value
 function switchLangChange(value: string) {
   i18n.locale.value = value
+  store.dispatch(AppAction.lang, value)
 }
 </script>
 

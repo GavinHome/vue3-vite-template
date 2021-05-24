@@ -6,7 +6,8 @@ const RouterConst = {
   ROUTER_DASHBOARD: 'dashboard',
   ROUTER_LOGIN: 'login',
   ROUTER_AXIOS: 'axios',
-  ROUTER_COUNTER: 'counter'
+  ROUTER_COUNTER: 'counter',
+  ROUTER_TEST: 'test'
 }
 
 export default RouterConst

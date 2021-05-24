@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { reactive, toRefs, ref } from 'vue'
 import { Card } from 'ant-design-vue'
-import { apiAxiosUser } from '../api'
+import { useApi } from '../hook'
 
 const loading = ref(false)
 const userInfo = reactive({
@@ -21,6 +21,7 @@ const userInfo = reactive({
   html_url: ''
 })
 
+const { apiAxiosUser } = useApi()
 const fetch = async (): Promise<void> => {
   loading.value = true
   const res = await apiAxiosUser()

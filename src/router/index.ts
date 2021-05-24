@@ -10,9 +10,8 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 // import Home from '@/views/Home.vue'
 import RouterConst from './const'
-import { TokenConst } from '../common/const'
 import i18n from '../language'
-import { useMessage, useUser } from '../hook'
+import { useConfig, useMessage, useUser } from '../hook'
 
 const { t } = i18n.global
 
@@ -56,6 +55,14 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: `axios`
         }
+      },
+      {
+        path: `/test`,
+        name: `test`,
+        component: () => import('@/views/Test.vue'),
+        meta: {
+          title: `test`
+        }
       }
     ]
   },
@@ -91,13 +98,14 @@ router.beforeEach(
     }
 
     if (to.meta && to.meta.auth) {
+      const config = useConfig()
       useUser()
         .checkToken()
         .then(() => {
           next()
         })
         .catch((error) => {
-          if (error === TokenConst.NO_TOKEN) {
+          if (error === config.token.NO_TOKEN) {
             useMessage().openWarnMsg(t('TOKEN_EXPIRE_MSG'))
           }
           next({

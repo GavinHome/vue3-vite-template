@@ -68,6 +68,4 @@ Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 
 ## Licenses
 
-[LGPL-3.0](https://opensource.org/licenses/LGPL-3.0)
-
-You can use the avigatorflow source code in the open source project of LGPL protocol, and retain the copyright information. (Powered by <a target="_blank" href="https://gitee.com/gavinhome/AvigatorFlow">AvigatorFlow</a>)
+[MIT](https://opensource.org/licenses/MIT)

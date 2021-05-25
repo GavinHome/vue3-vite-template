@@ -23,7 +23,7 @@ The starter developed base on [vue3](https://github.com/vuejs/vue-next) and [ant
 * plugin：build/vite/plugin
 * proxy：build/vite/proxy
 * UT：tests
-* 数据模拟：mock：mock
+* mock：mock
 * entry：src/main
 * router：src/router
 * store：src/store

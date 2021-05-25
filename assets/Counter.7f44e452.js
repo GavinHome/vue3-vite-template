@@ -1,0 +1,1 @@
+import{i as e,m as s,o as t,c as a,j as o,B as n}from"./vendor.96710f2c.js";const c={class:"counter"},r=o("div",{class:"page-title"},"Counter Page",-1);var u=e({expose:[],setup(e){const u=s(0),l=()=>{u.value+=1};return(e,s)=>(t(),a("div",c,[r,o("p",null,"count is: "+n(u.value),1),o("button",{onClick:l},"increment")]))}});export default u;

@@ -1,0 +1,1 @@
+import{b as a,c as e}from"./index.ea37b0e7.js";import{i as s,m as o,o as n,c as t,j as r,B as c}from"./vendor.96710f2c.js";const l={class:"mock"},m=r("div",null,"Mock Page",-1);var i=s({expose:[],setup(s){const i=o("");return a().get(e.API_MOCK_GET).then((({name:a})=>{i.value=a})),(a,e)=>(n(),t("div",l,[m,r("p",null,"name is: "+c(i.value),1)]))}});export default i;

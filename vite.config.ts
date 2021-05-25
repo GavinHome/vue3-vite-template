@@ -6,57 +6,64 @@ import { resolve } from 'path'
 import { VitePWA } from 'vite-plugin-pwa'
 import viteCompression from 'vite-plugin-compression'
 import { viteMockServe } from 'vite-plugin-mock'
+import createVitePlugins from './build/vite/plugin'
 
 // https://vitejs.dev/config/
 export default ({ mode, command }: ConfigEnv) => {
-  const target = loadEnv(mode, process.cwd()).VITE_APP_API_HOST
-  // const baseUrl = loadEnv(mode, process.cwd()).VITE_APP_BASE_URL || ''
+  const env = loadEnv(mode, process.cwd())
+
+  const target = env.VITE_APP_API_HOST
+  const isBuild = command === 'build'
+
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY } = env
+  const baseUrl = VITE_PUBLIC_PATH || ''
   return defineConfig({
-    plugins: [
-      vue(),
-      viteMockServe({
-        // ignore: /^\_/,
-        supportTs: true,
-        mockPath: 'mock',
-        localEnabled: command === 'serve'
-      }),
-      styleImport({
-        libs: [
-          {
-            libraryName: 'ant-design-vue',
-            esModule: true,
-            ensureStyleFile: true,
-            resolveStyle: (name) => {
-              return `ant-design-vue/es/${name}/style/index`
-            },
-            resolveComponent: (name) => {
-              return `ant-design-vue/lib/${name}`
-            }
-          }
-        ]
-      }),
-      createImportPlugin({
-        onlyBuild: false, // if onlyBuild === true, this plugin takes effect only in vite build mode; onlyBuild's default value is true.
-        babelImportPluginOptions: [
-          {
-            libraryName: 'ant-design-vue',
-            libraryDirectory: 'es',
-            style: 'css'
-          }
-        ]
-      }),
-      VitePWA({
-        manifest: {},
-        workbox: { skipWaiting: true, clientsClaim: true }
-      }),
-      viteCompression({
-        verbose: true,
-        disable: false,
-        threshold: 10240,
-        algorithm: 'gzip',
-        ext: '.gz'
-      })
-    ],
+    // plugins: [
+    //   vue(),
+    //   viteMockServe({
+    //     // ignore: /^\_/,
+    //     supportTs: true,
+    //     mockPath: 'mock',
+    //     localEnabled: command === 'serve'
+    //   }),
+    //   styleImport({
+    //     libs: [
+    //       {
+    //         libraryName: 'ant-design-vue',
+    //         esModule: true,
+    //         ensureStyleFile: true,
+    //         resolveStyle: (name) => {
+    //           return `ant-design-vue/es/${name}/style/index`
+    //         },
+    //         resolveComponent: (name) => {
+    //           return `ant-design-vue/lib/${name}`
+    //         }
+    //       }
+    //     ]
+    //   }),
+    //   createImportPlugin({
+    //     onlyBuild: false, // if onlyBuild === true, this plugin takes effect only in vite build mode; onlyBuild's default value is true.
+    //     babelImportPluginOptions: [
+    //       {
+    //         libraryName: 'ant-design-vue',
+    //         libraryDirectory: 'es',
+    //         style: 'css'
+    //       }
+    //     ]
+    //   }),
+    //   VitePWA({
+    //     manifest: {},
+    //     workbox: { skipWaiting: true, clientsClaim: true }
+    //   }),
+    //   viteCompression({
+    //     verbose: true,
+    //     disable: false,
+    //     threshold: 10240,
+    //     algorithm: 'gzip',
+    //     ext: '.gz'
+    //   })
+    // ],
+    plugins: createVitePlugins(env, isBuild),
     // base: baseUrl,
     css: {
       preprocessorOptions: {
@@ -79,7 +86,7 @@ export default ({ mode, command }: ConfigEnv) => {
     },
     server: {
       host: '0.0.0.0',
-      port: 3001,
+      port: Number(VITE_PORT),
       open: true,
       cors: true,
       proxy: {
@@ -98,6 +105,7 @@ export default ({ mode, command }: ConfigEnv) => {
           drop_debugger: true
         }
       },
+      sourcemap: command === 'serve',
       // rollupOptions: {
       //   output: {
       //     manualChunks: {}
@@ -105,5 +113,15 @@ export default ({ mode, command }: ConfigEnv) => {
       // },
       chunkSizeWarningLimit: 300
     }
+    // optimizeDeps: {
+    //   // @iconify/iconify: The dependency is dynamically and virtually loaded by @purge-icons/generated, so it needs to be specified explicitly
+    //   include: [
+    //     'ant-design-vue/es/locale/zh_CN',
+    //     'moment/dist/locale/zh-cn',
+    //     'ant-design-vue/es/locale/en_US',
+    //     'moment/dist/locale/eu'
+    //   ],
+    //   exclude: []
+    // }
   })
 }

@@ -32,6 +32,7 @@ The starter developed base on [vue3](https://github.com/vuejs/vue-next) and [ant
 * components：src/components
 * utils：src/common, src/utils
 * globalization：src/language
+* support jsx & tsx, and `script setup`
 
 ## Quick Start
 ```shell

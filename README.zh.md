@@ -32,6 +32,7 @@
 * 组件：src/components
 * 通用：src/common, src/utils
 * 国际化：src/language
+* 支持 jsx 和 tsx, 以及 `script setup`
 
 ## 快速开始
 ```shell

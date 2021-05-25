@@ -68,6 +68,4 @@ yarn dev
 
 ## 开源协议
 
-[LGPL-3.0](https://opensource.org/licenses/LGPL-3.0)
-
-您可以将 AvigatorFlow 源码用于 LGPL 协议的开源项目中，并保留版权信息（Powered by <a target="_blank" href="https://gitee.com/gavinhome/AvigatorFlow">AvigatorFlow</a>）
+[MIT](https://opensource.org/licenses/MIT)

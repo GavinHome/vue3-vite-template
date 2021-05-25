@@ -4,8 +4,8 @@ import configMockPlugin from './mock'
 import configStyleImportPlugin from './styleImport'
 import configCompressPlugin from './compress'
 import configPwaConfig from './pwa'
+import { ViteEnv } from '/#/global'
 
-// eslint-disable-next-line no-undef
 export default function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const { VITE_USE_MOCK, VITE_BUILD_COMPRESS } = viteEnv
 
@@ -29,7 +29,7 @@ export default function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   // vitePlugins.push(configThemePlugin(isBuild))
 
   // rollup-plugin-gzip
-  vitePlugins.push(configCompressPlugin(VITE_BUILD_COMPRESS, true))
+  vitePlugins.push(configCompressPlugin(VITE_BUILD_COMPRESS, false))
 
   // vite-plugin-pwa
   vitePlugins.push(configPwaConfig(viteEnv))

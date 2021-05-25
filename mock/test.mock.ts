@@ -4,34 +4,29 @@ import { resultSuccess } from './_util'
 
 export default [
   {
-    url: '/api/get',
+    url: '/api/test/get',
     method: 'get',
     response: ({ query }: any) => {
-      // return {
-      //   code: 0,
-      //   data: {
-      //     name: 'vben'
-      //   }
-      // }
       return resultSuccess({ name: 'vben' })
     }
   },
   {
-    url: '/api/post',
+    url: '/test/get',
+    method: 'get',
+    response: ({ query }: any) => {
+      return resultSuccess({ name: 'vben1' })
+    }
+  },
+  {
+    url: '/api/test/post',
     method: 'post',
     timeout: 2000,
     response: () => {
       return resultSuccess({ name: 'vben' })
     }
-    // response: {
-    //   code: 0,
-    //   data: {
-    //     name: 'vben'
-    //   }
-    // }
   },
   {
-    url: '/api/text',
+    url: '/api/test/text',
     method: 'post',
     rawResponse: async (req: IncomingMessage, res: ServerResponse) => {
       let reqbody = ''

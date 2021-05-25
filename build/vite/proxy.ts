@@ -15,17 +15,12 @@ const httpsRE = /^https:\/\//
  * Generate proxy
  * @param list
  */
-export default function createProxy(VITE_PROXY: string) {
-  let proxy: ProxyList = []
-  try {
-    proxy = JSON.parse(VITE_PROXY.replace(/\\n/g, '\n'))
-    // eslint-disable-next-line no-empty
-  } catch (error) {}
-
+export default function createProxy(list: ProxyList = []) {
   const ret: ProxyTargetList = {}
   // eslint-disable-next-line no-restricted-syntax
-  for (const [prefix, target] of proxy) {
+  for (const [prefix, target] of list) {
     const isHttps = httpsRE.test(target)
+
     // https://github.com/http-party/node-http-proxy#options
     ret[prefix] = {
       target,

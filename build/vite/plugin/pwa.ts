@@ -4,12 +4,12 @@
  */
 
 import { VitePWA } from 'vite-plugin-pwa'
+import { ViteEnv } from '/#/global'
 
-// eslint-disable-next-line no-undef
 export default function configPwaConfig(env: ViteEnv) {
   const { VITE_USE_PWA, VITE_APP_TITLE, VITE_APP_SHORT_NAME } = env
 
-  if (VITE_USE_PWA) {
+  if (VITE_USE_PWA && VITE_USE_PWA === 'true') {
     // vite-plugin-pwa
     const pwaPlugin = VitePWA({
       manifest: {

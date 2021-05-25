@@ -4,18 +4,18 @@
  */
 import { viteMockServe } from 'vite-plugin-mock'
 
-export default function configMockPlugin(isBuild: boolean, useMock: boolean) {
-  if (!useMock) return []
+export default function configMockPlugin(isBuild: boolean, useMock: string) {
+  if (!useMock || useMock === 'false') return []
   return viteMockServe({
     ignore: /^_/, /// ^\_/
     mockPath: 'mock',
     supportTs: true,
-    localEnabled: !isBuild
-    // prodEnabled: isBuild,
-    // injectCode: `
-    //   import setupProdMockServer from '../mock/_createProductionServer';
+    localEnabled: !isBuild,
+    prodEnabled: isBuild,
+    injectCode: `
+      import setupProdMockServer from '../mock/_createProductionServer';
 
-    //   setupProdMockServer();
-    //   `
+      setupProdMockServer();
+      `
   })
 }

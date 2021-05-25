@@ -6,7 +6,14 @@ const apiRefreshToken = (): Promise<ApiResult<UserAuthModel>> => {
   return useAxios().post<ApiResult<UserAuthModel>>(`${ApiConst.API_REFRESH_TOKEN}`)
 }
 
-const apiAxiosUser = (): Promise<any> => useAxios().get(ApiConst.API_AXIOS_USER, {}, false)
+const axiosUser = {
+  name: '',
+  type: '',
+  html_url: ''
+}
+
+const apiAxiosUser = (): Promise<typeof axiosUser> =>
+  useAxios().get<typeof axiosUser>(ApiConst.API_AXIOS_USER, {}, false)
 
 const apiLogError = (bodyContent: object): Promise<ApiResult<any>> =>
   useAxios().post<ApiResult<any>>(`${ApiConst.API_LOG_INDEX}`, bodyContent)

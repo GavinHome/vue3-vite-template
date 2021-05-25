@@ -16,6 +16,7 @@ export function resultSuccess<T = Recordable>(result: T, { message = 'ok' } = {}
     code: 0,
     result,
     message,
+    isSuccess: true,
     type: 'success'
   }
 }
@@ -42,6 +43,7 @@ export function resultError(message = 'Request failed', { code = -1, result = nu
     code,
     result,
     message,
+    isSuccess: false,
     type: 'error'
   }
 }

@@ -1,8 +1,9 @@
 export interface ApiResult<T> {
-  isSuccess: boolean
-  message: string
-  code: string
+  code: number
   result: T
+  message: string
+  isSuccess: boolean
+  type: string
 }
 
 export interface UserAuthModel {

@@ -6,13 +6,12 @@ declare interface ViteEnv {
   VITE_APP_VERSIONNAME: string
   VITE_USE_MOCK: boolean
   VITE_PUBLIC_PATH: string
-  VITE_DROP_CONSOLE: boolean
-  VITE_DROP_DEBUGGER: boolean
-  VITE_APP_API_HOST: string
+  VITE_GLOB_API_URL: string
   VITE_USE_PWA: boolean
   VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none'
+  VITE_APP_SHORT_NAME: string
 }
 
-interface ImportMetaEnv extends ViteEnv {
-  __: unknown
-}
+// interface ImportMetaEnv extends ViteEnv {
+//   __: unknown
+// }

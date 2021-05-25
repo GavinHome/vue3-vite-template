@@ -9,6 +9,7 @@ import { ResponseResult, ContentType, HttpMethod } from './model'
 
 import i18n from '../language'
 import { ApiConst, VERIFY_NEED_TOKEN } from '../common/const'
+import { ApiResult } from '../common/model'
 
 const { t } = i18n.global
 
@@ -57,8 +58,8 @@ const setError = (error: any) =>
 /// report error
 const logError = (error: any, data: any) => useLog().setLog(error, data)
 
-const apiHost = import.meta.env.PROD ? (import.meta.env.VITE_APP_API_HOST as string) : '/api'
-
+// const apiHost = import.meta.env.PROD ? (import.meta.env.VITE_GLOB_API_URL as string) : '/api'
+const apiHost = import.meta.env.VITE_GLOB_API_URL as string
 const axiosInstance = axios.create({
   baseURL: apiHost,
   timeout: 60000000,
@@ -167,12 +168,12 @@ class AxiosUtil {
     try {
       if (res.status === 200) {
         if (convertResult) {
-          const apiReturn = res.data as ResponseResult
-          if (apiReturn.data.isSuccess === false) {
-            const errorMsg = apiReturn.data.message
-            setError(errorMsg)
+          // const apiReturn = res.data as ResponseResult
+          const apiReturn = res.data as ApiResult<T>
+          if (apiReturn.isSuccess === false) {
+            setError(apiReturn.message)
           }
-          return apiReturn.data as T
+          return apiReturn.result as T
         }
         return res.data as T
       }

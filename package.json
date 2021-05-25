@@ -1,6 +1,12 @@
 {
   "name": "vue3-vite-template",
   "version": "0.0.0",
+  "author": {
+    "name": "GavinHome",
+    "email": "yangxiaoming512@yeah.net",
+    "url": "https://github.com/GavinHome"
+  },
+  "description": "A Vue3 + Vite2 + TypeScript template starter",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -56,5 +62,23 @@
     "vite-plugin-style-import": "^0.10.0",
     "vue-jest": "^5.0.0-alpha.9",
     "vue-tsc": "^0.0.24"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GavinHome/vue3-vite-template.git"
+  },
+  "keywords": [
+    "Vue3",
+    "Vite2",
+    "TypeScript",
+    "Template"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GavinHome/vue3-vite-template/issues"
+  },
+  "homepage": "https://github.com/GavinHome/vue3-vite-template",
+  "engines": {
+    "node": "^12 || >=14"
   }
 }

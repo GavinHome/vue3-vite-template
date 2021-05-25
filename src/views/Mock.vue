@@ -12,9 +12,13 @@ import { useAxios } from '../hook'
 
 const msg = ref('')
 
+const data = {
+  name: ''
+}
+
 useAxios()
-  .get(ApiConst.API_MOCK_GET, {}, false)
-  .then(({ data }) => {
-    msg.value = data.name
+  .get<typeof data>(ApiConst.API_MOCK_GET)
+  .then(({ name }) => {
+    msg.value = name
   })
 </script>

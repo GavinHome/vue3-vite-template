@@ -1,29 +1,34 @@
 import { IncomingMessage, ServerResponse } from 'http'
 import { MockMethod } from 'vite-plugin-mock'
+import { resultSuccess } from './_util'
 
 export default [
   {
     url: '/api/get',
     method: 'get',
     response: ({ query }: any) => {
-      return {
-        code: 0,
-        data: {
-          name: 'vben'
-        }
-      }
+      // return {
+      //   code: 0,
+      //   data: {
+      //     name: 'vben'
+      //   }
+      // }
+      return resultSuccess({ name: 'vben' })
     }
   },
   {
     url: '/api/post',
     method: 'post',
     timeout: 2000,
-    response: {
-      code: 0,
-      data: {
-        name: 'vben'
-      }
+    response: () => {
+      return resultSuccess({ name: 'vben' })
     }
+    // response: {
+    //   code: 0,
+    //   data: {
+    //     name: 'vben'
+    //   }
+    // }
   },
   {
     url: '/api/text',

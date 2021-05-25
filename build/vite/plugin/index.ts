@@ -1,4 +1,4 @@
-import { ConfigEnv, defineConfig, loadEnv, PluginOption } from 'vite'
+import { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import configMockPlugin from './mock'
 import configStyleImportPlugin from './styleImport'
@@ -10,9 +10,7 @@ export default function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const { VITE_USE_MOCK, VITE_BUILD_COMPRESS } = viteEnv
 
   const vitePlugins: (PluginOption | PluginOption[])[] = [
-    // have to
     vue()
-    // have to
     // vueJsx()
   ]
 

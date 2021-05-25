@@ -2,6 +2,8 @@ import useApi from './api'
 import useUser from './user'
 
 const setLog = (error: any, data?: any): void => {
+  // eslint-disable-next-line no-restricted-globals
+  const url = location.href
   const bodyContent = {
     entryName: `${import.meta.env.VITE_APP_TITLE}, ${import.meta.env.VITE_APP_VERSIONNAME}`,
     version: `${import.meta.env.VITE_APP_VERSION}, ${import.meta.env.VITE_APP_REVISION}`,
@@ -16,8 +18,7 @@ const setLog = (error: any, data?: any): void => {
     time: Date.now(),
     title: 'handle response error',
     type: `HTTP Response`,
-    // eslint-disable-next-line no-restricted-globals
-    url: location.href,
+    url,
     client: {
       userAgent: window.navigator.userAgent,
       height: window.screen.height,
@@ -28,12 +29,13 @@ const setLog = (error: any, data?: any): void => {
     error,
     lineNumber: null,
     columnNumber: null,
-    // eslint-disable-next-line no-restricted-globals
-    fileName: location.href,
+    fileName: url,
     pageLevel: null
   }
 
-  // useApi().apiLogError(bodyContent)
+  useApi()
+    .apiLogError(bodyContent)
+    .catch((e) => {})
 }
 
 const useLog = () => {

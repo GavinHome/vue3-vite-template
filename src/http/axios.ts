@@ -58,7 +58,6 @@ const setError = (error: any) =>
 /// report error
 const logError = (error: any, data: any) => useLog().setLog(error, data)
 
-// const apiHost = import.meta.env.PROD ? (import.meta.env.VITE_GLOB_API_URL as string) : '/api'
 const apiHost = import.meta.env.VITE_GLOB_API_URL as string
 const axiosInstance = axios.create({
   baseURL: apiHost,

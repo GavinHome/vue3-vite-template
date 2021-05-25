@@ -8,7 +8,7 @@ import {
 } from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-// import Home from '@/views/Home.vue'
+import Home from '@/views/Home.vue'
 import RouterConst from './const'
 import i18n from '../language'
 import { useConfig, useMessage, useUser } from '../hook'
@@ -20,7 +20,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: `/`,
     name: RouterConst.ROUTER_DASHBOARD,
-    component: () => import('@/views/Home.vue'),
+    // component: () => import('@/views/Home.vue'),
+    component: Home,
     redirect: `${RouterConst.ROUTER_HOME}`,
     children: [
       {
@@ -100,9 +101,9 @@ const router: Router = createRouter({
 router.beforeEach(
   (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     NProgress.start()
-    document.title = import.meta.env.VITE_APP_TITLE
+    document.title = import.meta.env.VITE_APP_TITLE as string
     if (to.meta && to.meta.title) {
-      document.title = `${import.meta.env.VITE_APP_TITLE}-${to.meta.title}`
+      document.title += `-${to.meta.title}`
     }
 
     if (to.meta && to.meta.auth) {

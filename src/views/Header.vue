@@ -1,5 +1,8 @@
 <template>
   <a-menu mode="horizontal" v-model:selectedKeys="selectedKeys" @click="click">
+    <div class="logo">
+      <Logo />
+    </div>
     <a-menu-item v-for="item in navigators" :key="item.key">
       {{ item.title }}
     </a-menu-item>
@@ -20,6 +23,7 @@ import { Menu, Select } from 'ant-design-vue'
 import RouterConst from '../router/const'
 import { useStore } from '../store'
 import { AppActionEnum } from '../store/modules/app/action'
+import Logo from './Logo'
 
 const AMenu = Menu
 const AMenuItem = Menu.Item
@@ -78,5 +82,8 @@ function switchLangChange(value: string) {
 .lang {
   float: right;
   margin-right: 20px;
+}
+.logo {
+  float: left;
 }
 </style>

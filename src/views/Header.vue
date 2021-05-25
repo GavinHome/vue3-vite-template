@@ -1,10 +1,13 @@
 <template>
-  <a-menu mode="horizontal" :selectedKeys="state.selectedKeys" @click="click">
-    <a-menu-item v-for="item in state.menus" :key="item.key">
+  <a-menu mode="horizontal" v-model:selectedKeys="selectedKeys" @click="click">
+    <div class="logo">
+      <Logo />
+    </div>
+    <a-menu-item v-for="item in navigators" :key="item.key">
       {{ item.title }}
     </a-menu-item>
-    <div class="select-lang">
-      <a-select default-value="en-US" @change="handleLangChange">
+    <div class="lang">
+      <a-select default-value="en-US" v-model:value="lang" @change="switchLangChange">
         <a-select-option value="en-US"> {{ t('LOCALE_EN') }} </a-select-option>
         <a-select-option value="zh-CN"> {{ t('LOCALE_ZH') }} </a-select-option>
       </a-select>
@@ -13,33 +16,43 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, watch, computed } from 'vue'
+import { onMounted, watch, computed, ref, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { Menu, Select } from 'ant-design-vue'
 import RouterConst from '../router/const'
+import { useStore } from '../store'
+import { AppActionEnum } from '../store/modules/app/action'
+import Logo from './Logo'
+
+const AMenu = Menu
+const AMenuItem = Menu.Item
+const ASelect = Select
+const ASelectOption = Select.Option
 
 const router = useRouter()
 const { t } = useI18n()
 const i18n = useI18n()
-const menus = computed(() => [
+const navigators = computed(() => [
   { key: RouterConst.ROUTER_HOME, title: t('ROUTER_HOME') },
   { key: RouterConst.ROUTER_ABOUT, title: t('ROUTER_ABOUT') },
   { key: RouterConst.ROUTER_COUNTER, title: t('ROUTER_COUNTER') },
-  { key: RouterConst.ROUTER_AXIOS, title: t('ROUTER_AXIOS') }
+  { key: RouterConst.ROUTER_AXIOS, title: t('ROUTER_AXIOS') },
+  { key: RouterConst.ROUTER_TEST, title: t('ROUTER_TEST') },
+  { key: RouterConst.ROUTER_MOCK, title: t('ROUTER_MOCK') }
 ])
 
-const selectedKeys: Array<string> = []
+const selectedKeys = ref<Array<string>>([])
 const click = async (params: { key: string }) => {
   await router.push({ name: params.key })
 }
-const state = reactive({ selectedKeys, menus })
 
 const activeNav = (path: string) => {
   const name = path.replace('/', '')
-  if (state.menus.find((x) => x.key === name)) {
-    state.selectedKeys = [name]
+  if (navigators.value.find((x) => x.key === name)) {
+    selectedKeys.value = [name]
   } else {
-    state.selectedKeys = [RouterConst.ROUTER_HOME]
+    selectedKeys.value = [RouterConst.ROUTER_HOME]
   }
 }
 
@@ -56,14 +69,21 @@ onMounted(() => {
   })
 })
 
-const handleLangChange = (value: string) => {
+const store = useStore()
+const { lang } = toRefs(store.state.app)
+i18n.locale.value = lang.value
+function switchLangChange(value: string) {
   i18n.locale.value = value
+  store.dispatch(AppActionEnum.lang, value)
 }
 </script>
 
 <style lang="stylus" scoped>
-.select-lang {
+.lang {
   float: right;
   margin-right: 20px;
+}
+.logo {
+  float: left;
 }
 </style>

@@ -1,67 +1,60 @@
-import { defineConfig, loadEnv } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import styleImport from 'vite-plugin-style-import'
-import createImportPlugin from 'vite-plugin-import'
+import { ConfigEnv, defineConfig, loadEnv } from 'vite'
 import { resolve } from 'path'
+import createVitePlugins from './build/vite/plugin'
+import configModifyVars from './build/vite/modifyVars'
+import createProxy from './build/vite/proxy'
+import wrapperEnv from './build/utils'
 
 // https://vitejs.dev/config/
-export default ({ mode }) => {
-  const target = loadEnv(mode, process.cwd()).VITE_APP_API_HOST
-  // const baseUrl = loadEnv(mode, process.cwd()).VITE_APP_BASE_URL || ''
+export default ({ mode, command }: ConfigEnv) => {
+  const env = loadEnv(mode, process.cwd())
+  const viteEnv = wrapperEnv(env)
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY } = viteEnv
+  const baseUrl = VITE_PUBLIC_PATH || ''
+  const isBuild = command === 'build'
   return defineConfig({
-    plugins: [
-      vue(),
-      styleImport({
-        libs: [
-          {
-            libraryName: 'ant-design-vue',
-            esModule: true,
-            ensureStyleFile: true,
-            resolveStyle: (name) => {
-              return `ant-design-vue/es/${name}/style/index`
-            },
-            resolveComponent: (name) => {
-              return `ant-design-vue/lib/${name}`
-            }
-          }
-        ]
-      }),
-      createImportPlugin({
-        onlyBuild: false, // if onlyBuild === true, this plugin takes effect only in vite build mode; onlyBuild's default value is true.
-        babelImportPluginOptions: [
-          {
-            libraryName: 'ant-design-vue',
-            libraryDirectory: 'es',
-            style: 'css'
-          }
-        ]
-      })
-    ],
-    // base: baseUrl,
+    plugins: createVitePlugins(env, isBuild),
+    base: baseUrl,
     css: {
       preprocessorOptions: {
         less: {
+          modifyVars: configModifyVars(),
           javascriptEnabled: true
         }
       }
     },
     resolve: {
       alias: {
-        '@': resolve(__dirname, 'src')
+        '@': resolve(__dirname, 'src'),
+        '#': resolve(__dirname, 'types')
+        // 'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js'
       }
     },
     server: {
-      port: 3001,
+      host: '0.0.0.0',
+      port: VITE_PORT,
       open: true,
       cors: true,
-      proxy: {
-        '/api': {
-          target,
-          changeOrigin: true,
-          secure: false,
-          rewrite: (path) => path.replace('/api/', '/')
+      proxy: createProxy(VITE_PROXY)
+    },
+    build: {
+      terserOptions: {
+        compress: {
+          // keep_infinity: true,
+          drop_console: isBuild,
+          drop_debugger: isBuild
         }
-      }
+      },
+      sourcemap: command === 'serve',
+      rollupOptions: {
+        output: {
+          // manualChunks: {
+          //   // moment: ['moment'],
+          //   // loash: ['lodash']
+          // }
+        }
+      },
+      chunkSizeWarningLimit: 550
     }
   })
 }

@@ -5,11 +5,29 @@
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
+    "baseUrl": ".",
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "types": ["vite/client", "jest"]
+    "types": ["vite/client", "jest", "vite-plugin-pwa/client"],
+    "typeRoots": ["./node_modules/@types/", "./types"],
+    "paths": {
+      "@/*": ["src/*"],
+      "#/*": ["types/*"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "types/**/*.d.ts",
+    "types/**/*.ts",
+    "mock/**/*.ts",
+    "build/**/*.d.ts",
+    "build/**/*.ts",
+  ],
+  "exclude": ["node_modules", "dist"]
 }

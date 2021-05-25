@@ -3,6 +3,8 @@ export default {
   ROUTER_ABOUT: '关于',
   ROUTER_COUNTER: '计数',
   ROUTER_AXIOS: '网络请求',
+  ROUTER_TEST: '测试',
+  ROUTER_MOCK: '数据模拟',
 
   TOKEN_EXPIRE_MSG: '登录已过期，请重新登录',
 

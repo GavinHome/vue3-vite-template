@@ -1,8 +1,9 @@
 export interface ApiResult<T> {
-  isSuccess: boolean
-  message: string
-  code: string
+  code: number
   result: T
+  message: string
+  isSuccess: boolean
+  type: string
 }
 
 export interface UserAuthModel {
@@ -12,9 +13,8 @@ export interface UserAuthModel {
   tokenExpiration: number
 }
 
-// page result
 export interface PagedResult<T> {
-  took: number // take time
+  took: number
   pageIndex: number
   pageSize: number
   totalPage: number
@@ -22,7 +22,6 @@ export interface PagedResult<T> {
   pageResults: Array<T>
 }
 
-// page query
 export interface PageQuery {
   pageIndex: number
   pageSize: number

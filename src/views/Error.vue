@@ -1,6 +1,6 @@
 <template>
   <div class="error">
-    <!-- <img :src="errorSvg" alt="error" /> -->
+    <img src="@/assets/500.svg" alt="error" />
     <div class="content">
       <h1>出错了</h1>
       <div class="desc">{{ desc }}</div>
@@ -11,7 +11,6 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import errorSvg from '@/assets/500.svg'
 import { defineProps } from 'vue'
 import RouterConst from '../router/const'
 

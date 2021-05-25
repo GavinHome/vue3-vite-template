@@ -17,6 +17,8 @@ module.exports = {
   },
   plugins: ['vue', '@typescript-eslint'],
   rules: {
+    'import/prefer-default-export': 'off',
+    'vue/no-v-model-argument': 'off',
     'no-unused-vars': 'off',
     'import/no-unresolved': 'off',
     'import/extensions': 'off',

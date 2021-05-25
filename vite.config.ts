@@ -26,7 +26,7 @@ export default ({ mode, command }: ConfigEnv) => {
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),
-        '~': resolve(__dirname, 'types')
+        '#': resolve(__dirname, 'types')
         // 'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js'
       }
     },
@@ -46,22 +46,15 @@ export default ({ mode, command }: ConfigEnv) => {
         }
       },
       sourcemap: command === 'serve',
-      // rollupOptions: {
-      //   output: {
-      //     manualChunks: {}
-      //   }
-      // },
-      chunkSizeWarningLimit: 650
+      rollupOptions: {
+        output: {
+          // manualChunks: {
+          //   // moment: ['moment'],
+          //   // loash: ['lodash']
+          // }
+        }
+      },
+      chunkSizeWarningLimit: 300
     }
-    // optimizeDeps: {
-    //   // @iconify/iconify: The dependency is dynamically and virtually loaded by @purge-icons/generated, so it needs to be specified explicitly
-    //   include: [
-    //     'ant-design-vue/es/locale/zh_CN',
-    //     'moment/dist/locale/zh-cn',
-    //     'ant-design-vue/es/locale/en_US',
-    //     'moment/dist/locale/eu'
-    //   ],
-    //   exclude: []
-    // }
   })
 }

@@ -12,7 +12,6 @@ export default function configCompressPlugin(
   const compressList = compress.split(',')
 
   const plugins: Plugin[] = []
-
   if (compressList.includes('gzip')) {
     plugins.push(
       compressPlugin({
@@ -21,7 +20,7 @@ export default function configCompressPlugin(
         deleteOriginFile,
         verbose: true,
         disable: false,
-        threshold: 10240
+        threshold: 1024 * 10
       })
     )
   }
@@ -33,7 +32,7 @@ export default function configCompressPlugin(
         deleteOriginFile,
         verbose: true,
         disable: false,
-        threshold: 10240
+        threshold: 1024 * 10
       })
     )
   }

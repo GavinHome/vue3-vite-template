@@ -1,6 +1,6 @@
 import { Module } from 'vuex'
 import { RootState } from '../../state'
-import { AppAction } from './action'
+import { AppActionEnum } from './action'
 import { AppState } from './state'
 
 const defaultState: AppState = {
@@ -15,19 +15,19 @@ const userModule: Module<AppState, RootState> = {
     return defaultState
   },
   mutations: {
-    [AppAction.onIncrement]: (state: typeof defaultState) => {
+    [AppActionEnum.onIncrement]: (state: typeof defaultState) => {
       state.count += 1
     },
-    [AppAction.onLang]: (state: typeof defaultState, lang: string) => {
+    [AppActionEnum.onLang]: (state: typeof defaultState, lang: string) => {
       state.lang = lang
     }
   },
   actions: {
-    [AppAction.increment]: (context) => {
-      context.commit(AppAction.onIncrement)
+    [AppActionEnum.increment]: (context) => {
+      context.commit(AppActionEnum.onIncrement)
     },
-    [AppAction.lang]: (context, lang: string) => {
-      context.commit(AppAction.onLang, lang)
+    [AppActionEnum.lang]: (context, lang: string) => {
+      context.commit(AppActionEnum.onLang, lang)
     }
   },
   getters: {

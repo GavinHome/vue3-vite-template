@@ -2,7 +2,7 @@ import moment from 'moment'
 import { Module } from 'vuex'
 import { useApi, useConfig } from '../../../hook'
 import { RootState } from '../../state'
-import { UserAction } from './action'
+import { UserActionEnum } from './action'
 import { UserState } from './state'
 
 const defaultState: UserState = {
@@ -18,13 +18,13 @@ const userModule: Module<UserState, RootState> = {
     return defaultState
   },
   mutations: {
-    [UserAction.ON_SET_USER]: (state: typeof defaultState, user: UserState) => {
+    [UserActionEnum.ON_SET_USER]: (state: typeof defaultState, user: UserState) => {
       state.id = user.id
       state.name = user.name
       state.token = user.token
       state.tokenExpiration = user.tokenExpiration
     },
-    [UserAction.ON_CLEAR_USER]: (state: typeof defaultState) => {
+    [UserActionEnum.ON_CLEAR_USER]: (state: typeof defaultState) => {
       state.id = ''
       state.name = ''
       state.token = ''
@@ -32,9 +32,10 @@ const userModule: Module<UserState, RootState> = {
     }
   },
   actions: {
-    [UserAction.SIGN]: async ({ commit }, user: UserState) => commit(UserAction.ON_SET_USER, user),
-    [UserAction.SIGNOUT]: async ({ commit }) => commit(UserAction.ON_CLEAR_USER),
-    [UserAction.CHECK]: ({ commit, dispatch, state }) =>
+    [UserActionEnum.SIGN]: async ({ commit }, user: UserState) =>
+      commit(UserActionEnum.ON_SET_USER, user),
+    [UserActionEnum.SIGNOUT]: async ({ commit }) => commit(UserActionEnum.ON_CLEAR_USER),
+    [UserActionEnum.CHECK]: ({ commit, dispatch, state }) =>
       // eslint-disable-next-line no-async-promise-executor
       new Promise(async (resolve, reject) => {
         const config = useConfig()
@@ -46,7 +47,7 @@ const userModule: Module<UserState, RootState> = {
           const curTime = moment().toDate()
 
           if (curTime > expireDate) {
-            await dispatch(UserAction.SIGN)
+            await dispatch(UserActionEnum.SIGN)
             reject(config.token.NO_TOKEN)
           } else {
             const refreshDate = moment(expireDate)
@@ -56,7 +57,7 @@ const userModule: Module<UserState, RootState> = {
             if (refreshDate <= curTime) {
               const result = await api.apiRefreshToken()
               if (result.isSuccess && result.result) {
-                await dispatch(UserAction.SIGN, result.result)
+                await dispatch(UserActionEnum.SIGN, result.result)
               } else {
                 reject(config.token.NO_TOKEN)
               }

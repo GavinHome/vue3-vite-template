@@ -17,10 +17,8 @@ const httpsRE = /^https:\/\//
  */
 export default function createProxy(list: ProxyList = []) {
   const ret: ProxyTargetList = {}
-  // eslint-disable-next-line no-restricted-syntax
-  for (const [prefix, target] of list) {
+  list.forEach(([prefix, target]) => {
     const isHttps = httpsRE.test(target)
-
     // https://github.com/http-party/node-http-proxy#options
     ret[prefix] = {
       target,
@@ -30,8 +28,7 @@ export default function createProxy(list: ProxyList = []) {
       // https is require secure=false
       ...(isHttps ? { secure: false } : {})
     }
-  }
-
+  })
   return ret
 }
 

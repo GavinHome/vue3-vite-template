@@ -1,6 +1,6 @@
 import { UserAuthModel } from '../common/model'
 import { useStore } from '../store'
-import { UserAction } from '../store/modules/user/action'
+import { UserActionEnum } from '../store/modules/user/action'
 
 const getUser = (): UserAuthModel => {
   const store = useStore()
@@ -9,7 +9,7 @@ const getUser = (): UserAuthModel => {
 
 const checkToken = (): Promise<any> => {
   const store = useStore()
-  return store.dispatch(UserAction.CHECK)
+  return store.dispatch(UserActionEnum.CHECK)
 }
 
 const useUser = () => {

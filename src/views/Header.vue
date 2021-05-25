@@ -19,7 +19,7 @@ import { useI18n } from 'vue-i18n'
 import { Menu, Select } from 'ant-design-vue'
 import RouterConst from '../router/const'
 import { useStore } from '../store'
-import { AppAction } from '../store/modules/app/action'
+import { AppActionEnum } from '../store/modules/app/action'
 
 const AMenu = Menu
 const AMenuItem = Menu.Item
@@ -70,7 +70,7 @@ const { lang } = toRefs(store.state.app)
 i18n.locale.value = lang.value
 function switchLangChange(value: string) {
   i18n.locale.value = value
-  store.dispatch(AppAction.lang, value)
+  store.dispatch(AppActionEnum.lang, value)
 }
 </script>
 

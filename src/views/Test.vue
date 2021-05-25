@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
 import { useStore } from '../store'
-import { AppAction } from '../store/modules/app/action'
+import { AppActionEnum } from '../store/modules/app/action'
 
 const msg = ref('test')
 
@@ -19,7 +19,7 @@ const store = useStore()
 const { count } = toRefs(store.state.app)
 
 const increment = () => {
-  store.dispatch(AppAction.increment)
+  store.dispatch(AppActionEnum.increment)
   // count.value = store.state.app.count //lost reactivity, get count
 }
 </script>

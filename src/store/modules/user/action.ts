@@ -1,6 +1,5 @@
-/* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line no-shadow
-export enum UserAction {
+export enum UserActionEnum {
   SIGN = 'use/SIGN',
   SIGNOUT = 'use/SIGNOUT',
   CHECK = 'use/CHECK',

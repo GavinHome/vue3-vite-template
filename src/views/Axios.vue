@@ -1,17 +1,17 @@
 <template>
   <div class="axios">
-    <Card title="Axios Test" class="card" :loading="loading" hoverable>
+    <a-card title="Axios Test" class="card" :loading="loading" hoverable>
       <template #extra><a @click="fetch">点击获取信息</a></template>
       <p>name: {{ userInfo?.name }}</p>
       <p>type: {{ userInfo?.type }}</p>
       <p>url: {{ userInfo?.html_url }}</p>
-    </Card>
+    </a-card>
   </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { Card } from 'ant-design-vue'
+import { ACard } from '#/ant-design-vue'
 import { useApi } from '../hook'
 
 const loading = ref(false)

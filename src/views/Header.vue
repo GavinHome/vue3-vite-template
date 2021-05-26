@@ -19,16 +19,11 @@
 import { onMounted, watch, computed, ref, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { Menu, Select } from 'ant-design-vue'
+import { AMenu, AMenuItem, ASelect, ASelectOption } from '#/ant-design-vue'
 import RouterConst from '../router/const'
 import { useStore } from '../store'
 import { AppActionEnum } from '../store/modules/app/action'
 import Logo from './Logo'
-
-const AMenu = Menu
-const AMenuItem = Menu.Item
-const ASelect = Select
-const ASelectOption = Select.Option
 
 const router = useRouter()
 const { t } = useI18n()

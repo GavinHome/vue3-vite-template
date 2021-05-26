@@ -9,11 +9,17 @@ export default function wrapperEnv(envConf: Recordable): ViteEnv {
     if (envName === 'VITE_PORT') {
       realName = Number(realName)
     }
-    if (envName === 'VITE_PROXY') {
-      realName = JSON.parse(realName)
-    }
+    // if (envName === 'VITE_PROXY') {
+    //   try {
+    //     realName = JSON.parse(realName)
+    //     // eslint-disable-next-line no-empty
+    //   } catch (error) {
+    //     realName = []
+    //   }
+    // }
     ret[envName] = realName
     process.env[envName] = realName
   })
+
   return ret as ViteEnv
 }

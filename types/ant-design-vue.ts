@@ -1,3 +1,15 @@
+/**
+ * When some components of ant-desigin-vue are imported locally, Vue cannot correctly resolve
+ * the component name, including Menu, MenuItem, Select, SelectOption, Layout, LayoutContent.
+ *
+ * Instructions look like <a-menu />, <a-menu-item />, <a-select />, <a-select-option />,
+ * <a-layout />, <a-layout-content />, <a-button />, <a-card />.
+ *
+ * If not, use <Menu />, <Select />, <Layout />, <Button />, <Card /> instead,
+ * but <MenuItem />, <SelectOption />, <LayoutContent /> cannot be used.
+ *
+ * So this file generates a new type of ant-design-vue types to solve this problem.
+ */
 import { Menu, Select, Layout, Button, Card } from 'ant-design-vue'
 
 const AMenu = Menu

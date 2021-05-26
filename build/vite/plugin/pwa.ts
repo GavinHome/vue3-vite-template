@@ -4,7 +4,7 @@
  */
 
 import { VitePWA } from 'vite-plugin-pwa'
-import { ViteEnv } from '/#/global'
+import { ViteEnv } from '#/global'
 
 export default function configPwaConfig(env: ViteEnv) {
   const { VITE_USE_PWA, VITE_APP_TITLE, VITE_APP_SHORT_NAME } = env

@@ -1,5 +1,5 @@
 import { Recordable } from 'vite-plugin-mock'
-import { ViteEnv } from '/#/global'
+import { ViteEnv } from '#/global'
 
 // Read all environment variable configuration files to process.env
 export default function wrapperEnv(envConf: Recordable): ViteEnv {

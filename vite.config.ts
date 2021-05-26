@@ -1,5 +1,5 @@
 import { ConfigEnv, defineConfig, loadEnv } from 'vite'
-import { resolve } from 'path'
+import path from 'path'
 import createVitePlugins from './build/vite/plugin'
 import configModifyVars from './build/vite/modifyVars'
 import createProxy from './build/vite/proxy'
@@ -20,13 +20,19 @@ export default ({ mode, command }: ConfigEnv) => {
         less: {
           modifyVars: configModifyVars(),
           javascriptEnabled: true
+        },
+        stylus: {
+          // or styl, depending on the stylus files extension name you use, or lang name from `<style lang="stylus" scoped>` in vue file
+          // it looks like `@import '../assets/var.styl'` in your vue or styl or stylus file, and other common stylus file
+          imports: [path.resolve(__dirname, 'src/assets/var.styl')],
+          javascriptEnabled: true
         }
       }
     },
     resolve: {
       alias: {
-        '@': resolve(__dirname, 'src'),
-        '#': resolve(__dirname, 'types')
+        '@': path.resolve(__dirname, 'src'),
+        '#': path.resolve(__dirname, 'types')
         // 'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js'
       }
     },

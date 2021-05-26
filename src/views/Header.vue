@@ -39,7 +39,8 @@ const navigators = computed(() => [
   { key: RouterConst.ROUTER_COUNTER, title: t('ROUTER_COUNTER') },
   { key: RouterConst.ROUTER_AXIOS, title: t('ROUTER_AXIOS') },
   { key: RouterConst.ROUTER_TEST, title: t('ROUTER_TEST') },
-  { key: RouterConst.ROUTER_MOCK, title: t('ROUTER_MOCK') }
+  { key: RouterConst.ROUTER_MOCK, title: t('ROUTER_MOCK') },
+  { key: RouterConst.ROUTER_VUEUSE, title: t('ROUTER_VUEUSE') }
 ])
 
 const selectedKeys = ref<Array<string>>([])

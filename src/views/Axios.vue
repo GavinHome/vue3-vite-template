@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, toRefs, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { Card } from 'ant-design-vue'
 import { useApi } from '../hook'
 
@@ -24,7 +24,7 @@ const userInfo = reactive({
 const { apiAxiosUser } = useApi()
 const fetch = async (): Promise<void> => {
   loading.value = true
-  const res = await apiAxiosUser()
+  const res = await apiAxiosUser<typeof userInfo>()
   userInfo.name = res.name
   userInfo.type = res.type
   userInfo.html_url = res.html_url

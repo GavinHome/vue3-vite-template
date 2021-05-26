@@ -5,6 +5,7 @@ export default {
   ROUTER_AXIOS: '网络请求',
   ROUTER_TEST: '测试',
   ROUTER_MOCK: '数据模拟',
+  ROUTER_VUEUSE: 'VueUse',
 
   TOKEN_EXPIRE_MSG: '登录已过期，请重新登录',
 

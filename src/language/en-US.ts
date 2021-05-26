@@ -5,6 +5,7 @@ export default {
   ROUTER_AXIOS: 'Axios',
   ROUTER_TEST: 'Test',
   ROUTER_MOCK: 'Mock',
+  ROUTER_VUEUSE: 'vueuse',
 
   TOKEN_EXPIRE_MSG: 'Login has expired, please log in again',
 

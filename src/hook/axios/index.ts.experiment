@@ -1,0 +1,169 @@
+import { useAxios } from '@vueuse/integrations'
+import axios, { AxiosInstance, ResponseType } from 'axios'
+import { ApiResult } from '../common/model'
+import { AxiosOption, ContentType, HttpMethod, UseAxiosReturn } from './model'
+import useError from './useError'
+import { useToken } from './useToken'
+
+const useInstance = (): AxiosInstance => {
+  const baseURL = import.meta.env.VITE_GLOB_API_URL as string
+  const instance = axios.create({
+    baseURL,
+    timeout: 60000000,
+    responseType: 'json',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Cache-Control': 'no-cache'
+    }
+  })
+
+  instance.interceptors.request.use(
+    async (config) => {
+      await useToken(config)
+      return config
+    },
+    (error) => {
+      return Promise.reject(error)
+    }
+  )
+
+  instance.interceptors.response.use(
+    (response) => {
+      return response
+    },
+    (error) => {
+      if (error && error.toString().indexOf('500') > 0) {
+        useError().RouterError(error)
+      }
+      return Promise.reject(error)
+    }
+  )
+  return instance
+}
+
+const useHeader = (contentType: ContentType) => {
+  const headers = {
+    'Content-Type': contentType
+  }
+  return headers
+}
+
+const useResponseType = (responseType?: ResponseType | null | undefined): ResponseType => {
+  return responseType || 'json'
+}
+
+const useResponseError = <Error, T>(error: Error, data: T) => {
+  useError().LogError(error, data)
+  throw error
+}
+
+const useResponseAsync = <T>(response: UseAxiosReturn<any>, convert: boolean): Promise<T> =>
+  new Promise((resolve, reject) => {
+    const { data, isFinished, error } = response
+
+    if (error.value) {
+      useError().RouterError(error.value?.message)
+      // return useResponseError(error, data.value)
+      useResponseError(error, data.value)
+      reject(error)
+    }
+
+    if (isFinished.value) {
+      if (convert) {
+        const apiReturn = data.value as ApiResult<T>
+        if (apiReturn.isSuccess === false) {
+          useError().RouterError(apiReturn.message)
+          // return useResponseError(error, data.value)
+          useResponseError(error, data.value)
+          reject(error)
+        }
+        // return apiReturn.result as T
+        resolve(apiReturn.result as T)
+      }
+
+      // return data.value as T
+      resolve(data.value as T)
+    }
+
+    // return new Error()
+    const empty = new Error()
+    useResponseError(empty, null)
+    reject(empty)
+  })
+
+const useResponse = <T>(response: UseAxiosReturn<any>, convert: boolean): Promise<T> =>
+  useResponseAsync<T>(response, convert)
+
+const useGet = async <T>(url: string, params?: object, convert = true): Promise<T> => {
+  const instance = useInstance()
+  const headers = useHeader(ContentType.JSON)
+  const options: AxiosOption = {
+    method: HttpMethod.GET,
+    params,
+    contentType: ContentType.JSON,
+    headers,
+    responseType: useResponseType()
+  }
+
+  const response = await useAxios(url, { ...options, headers }, instance)
+  const result = await useResponse<T>(response, convert)
+  return result
+}
+
+const usePost = <T>(url: string, data?: object, convert = true): Promise<T> => {
+  const instance = useInstance()
+  const headers = useHeader(ContentType.JSON)
+  const options: AxiosOption = {
+    method: HttpMethod.POST,
+    data: JSON.stringify(data),
+    contentType: ContentType.JSON,
+    headers
+  }
+
+  const response = useAxios(url, { ...options, headers }, instance)
+  return useResponse(response, convert)
+}
+
+const usePut = <T>(url: string, data?: object, convert = true): Promise<T> => {
+  const instance = useInstance()
+  const headers = useHeader(ContentType.JSON)
+  const options: AxiosOption = {
+    method: HttpMethod.PUT,
+    data: JSON.stringify(data),
+    contentType: ContentType.JSON,
+    headers
+  }
+
+  const response = useAxios(url, { ...options, headers }, instance)
+  return useResponse(response, convert)
+}
+
+const usePatch = <T>(url: string, data?: object, convert = true): Promise<T> => {
+  const instance = useInstance()
+  const headers = useHeader(ContentType.JSON)
+  const options: AxiosOption = {
+    method: HttpMethod.PATCH,
+    data: JSON.stringify(data),
+    contentType: ContentType.JSON,
+    headers
+  }
+
+  const response = useAxios(url, { ...options, headers }, instance)
+  return useResponse(response, convert)
+}
+
+const useDelete = <T>(url: string, data?: object, convert = true): Promise<T> => {
+  const instance = useInstance()
+  const headers = useHeader(ContentType.JSON)
+  const options: AxiosOption = {
+    method: HttpMethod.DELETE,
+    data,
+    contentType: ContentType.JSON,
+    headers
+  }
+
+  const response = useAxios(url, { ...options, headers }, instance)
+  return useResponse(response, convert)
+}
+
+export { useGet, usePost, usePut, usePatch, useDelete }

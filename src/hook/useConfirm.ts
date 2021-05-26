@@ -8,7 +8,7 @@ const CancelText = t('CANCEL_TEXT')
 const DeleteTitle = t('DELETE_TITLE')
 const DeleteContent = t('DELETE_CONTENT')
 
-export const openDeleteModal = (
+const useDeleteModal = (
   onOk: () => void,
   title = DeleteTitle,
   content = DeleteContent,
@@ -27,7 +27,7 @@ export const openDeleteModal = (
   })
 }
 
-export const customConfirmModal = (
+const useCustomConfirmModal = (
   title: string,
   content: string,
   onOk: () => void,
@@ -38,51 +38,27 @@ export const customConfirmModal = (
   Modal.confirm({ title, content, onOk, onCancel, okText, cancelText })
 }
 
-export const openSuccessModal = (
-  title: string,
-  content: string,
-  onOk?: () => void,
-  okText = OkText
-) => {
+const useSuccessModal = (title: string, content: string, onOk?: () => void, okText = OkText) => {
   Modal.success({ title, content, onOk, okText })
 }
 
-export const openWarnModal = (
-  title: string,
-  content: string,
-  onOk?: () => void,
-  okText = OkText
-) => {
+const useWarnModal = (title: string, content: string, onOk?: () => void, okText = OkText) => {
   Modal.warning({ title, content, onOk, okText })
 }
 
-export const openInfoModal = (
-  title: string,
-  content: string,
-  onOk?: () => void,
-  okText = OkText
-) => {
+const useInfoModal = (title: string, content: string, onOk?: () => void, okText = OkText) => {
   Modal.info({ title, content, onOk, okText })
 }
 
-export const openErrorModal = (
-  title: string,
-  content: string,
-  onOk?: () => void,
-  okText = OkText
-) => {
+const useErrorModal = (title: string, content: string, onOk?: () => void, okText = OkText) => {
   Modal.error({ title, content, onOk, okText })
 }
 
-const useConfirmModal = () => {
-  return {
-    openSuccessModal,
-    openWarnModal,
-    openInfoModal,
-    openErrorModal,
-    customConfirmModal,
-    openDeleteModal
-  }
+export {
+  useSuccessModal,
+  useWarnModal,
+  useInfoModal,
+  useErrorModal,
+  useCustomConfirmModal,
+  useDeleteModal
 }
-
-export default useConfirmModal

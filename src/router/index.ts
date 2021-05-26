@@ -11,7 +11,7 @@ import 'nprogress/nprogress.css'
 import Home from '@/views/Home.vue'
 import RouterConst from './const'
 import i18n from '../language'
-import { useConfig, useMessage, useUser } from '../hook'
+import { useConfig, useWarnMsg, useCheckToken } from '../hook'
 
 const { t } = i18n.global
 
@@ -72,6 +72,14 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: `mock`
         }
+      },
+      {
+        path: `/vueuse`,
+        name: `vueuse`,
+        component: () => import('@/views/VueUse.vue'),
+        meta: {
+          title: `vueuse`
+        }
       }
     ]
   },
@@ -108,14 +116,13 @@ router.beforeEach(
 
     if (to.meta && to.meta.auth) {
       const config = useConfig()
-      useUser()
-        .checkToken()
+      useCheckToken()
         .then(() => {
           next()
         })
         .catch((error) => {
           if (error === config.token.NO_TOKEN) {
-            useMessage().openWarnMsg(t('TOKEN_EXPIRE_MSG'))
+            useWarnMsg(t('TOKEN_EXPIRE_MSG'))
           }
           next({
             name: RouterConst.ROUTER_LOGIN,

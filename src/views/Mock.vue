@@ -6,9 +6,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs } from 'vue'
+import { ref } from 'vue'
 import { ApiConst } from '../common/const'
-import { useAxios } from '../hook'
+import { useGet } from '../hook'
 
 const msg = ref('')
 
@@ -16,9 +16,7 @@ const data = {
   name: ''
 }
 
-useAxios()
-  .get<typeof data>(ApiConst.API_MOCK_GET)
-  .then(({ name }) => {
-    msg.value = name
-  })
+useGet<typeof data>(ApiConst.API_MOCK_GET).then(({ name }) => {
+  msg.value = name
+})
 </script>

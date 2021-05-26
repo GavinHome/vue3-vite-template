@@ -8,7 +8,8 @@ const RouterConst = {
   ROUTER_AXIOS: 'axios',
   ROUTER_COUNTER: 'counter',
   ROUTER_TEST: 'test',
-  ROUTER_MOCK: 'mock'
+  ROUTER_MOCK: 'mock',
+  ROUTER_VUEUSE: 'vueuse'
 }
 
 export default RouterConst

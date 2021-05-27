@@ -94,11 +94,8 @@ interface FormState {
 const props = defineProps({
   redirect: {
     type: String
-    // required: true
   }
 })
-
-// console.log('redirect', props.redirect)
 
 const { t } = useI18n()
 const appState = useAppState() || { lang: 'en-US' }
@@ -168,7 +165,6 @@ const user = {
 
 const router = useRouter()
 const handleFinish = async (values: FormState) => {
-  // console.log(values, formState)
   const { username, password } = values
   const result = await useApi().apiLogin<typeof user>(username, password)
   if (result.isSuccess) {

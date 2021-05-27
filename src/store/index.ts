@@ -6,7 +6,6 @@ import app from './modules/app'
 import { RootState } from './state'
 import { UserState } from './modules/user/state'
 import { AppState } from './modules/app/state'
-// import { AllStateTypes } from './types'
 
 const defaultState: RootState = {
   count: 0
@@ -14,7 +13,6 @@ const defaultState: RootState = {
 
 export const key: InjectionKey<Store<RootState>> = Symbol('vue-store')
 
-// create a new store
 export const store = createStore({
   state() {
     return defaultState

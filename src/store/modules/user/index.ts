@@ -12,9 +12,7 @@ const defaultState: UserState = {
   expiration: 0
 }
 
-// create a new store
 const userModule: Module<UserState, RootState> = {
-  // namespaced: true,
   state() {
     return defaultState
   },

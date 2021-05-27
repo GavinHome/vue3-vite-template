@@ -16,8 +16,8 @@ import RouterConst from '../router/const'
 
 defineProps({
   msg: {
-    type: String
-    // required: true
+    type: String,
+    default: '中华人名'
   }
 })
 
@@ -26,7 +26,6 @@ const goBack = () => router.replace(RouterConst.ROUTER_HOME)
 </script>
 
 <style lang="stylus" scoped>
-// @import '@/assets/var.styl';
 .error {
   align-items: center;
   height: 100%;
@@ -45,13 +44,14 @@ const goBack = () => router.replace(RouterConst.ROUTER_HOME)
 
   .msg {
     margin-bottom: 16px;
-    // color: $text-color-secondary;
+    color: $text-color-secondary;
     font-size: 20px;
     line-height: 28px;
+    opacity: 0.45;
   }
 
   .back {
-    // color: $primary-color;
+    color: $primary-color;
     cursor: pointer;
   }
 }

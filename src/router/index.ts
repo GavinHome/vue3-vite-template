@@ -18,7 +18,6 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: `/`,
     name: RouterConst.ROUTER_DASHBOARD,
-    // component: () => import('@/views/Home.vue'),
     component: Home,
     redirect: `${RouterConst.ROUTER_HOME}`,
     children: [

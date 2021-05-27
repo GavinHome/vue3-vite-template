@@ -1,4 +1,3 @@
-// Router Const
 const RouterConst = {
   ROUTER_ABOUT: 'about',
   ROUTER_HOME: 'home',

@@ -8,9 +8,7 @@ const defaultState: AppState = {
   lang: 'zh-CN'
 }
 
-// create a new store
 const userModule: Module<AppState, RootState> = {
-  // namespaced: true,
   state() {
     return defaultState
   },
@@ -30,11 +28,7 @@ const userModule: Module<AppState, RootState> = {
       context.commit(AppActionEnum.onLang, lang)
     }
   },
-  getters: {
-    // double(state: typeof defaultState) {
-    //   return 2 * state.count
-    // }
-  }
+  getters: {}
 }
 
 export default userModule

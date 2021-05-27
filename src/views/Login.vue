@@ -158,8 +158,8 @@ const rules = {
 
 const user = {
   roles: '',
-  userId: '',
-  username: '',
+  id: '',
+  name: '',
   token: '',
   realName: '',
   desc: '',
@@ -174,8 +174,8 @@ const handleFinish = async (values: FormState) => {
   if (result.isSuccess) {
     useSuccessMsg(t('LOGIN_MESSAGE_SUCCESSED'))
     useSign({
-      id: result.result.userId,
-      name: result.result.username,
+      id: result.result.id,
+      name: result.result.name,
       token: result.result.token,
       expiration: result.result.expiration
     })

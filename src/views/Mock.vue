@@ -2,7 +2,7 @@
   <div class="mock">
     <div>Mock Page</div>
     <p>name is: {{ msg }}</p>
-    <p>login name is: {{ name }}</p>
+    <p>token is: {{ token }}</p>
     <button @click="refresh">token</button>
   </div>
 </template>
@@ -20,7 +20,7 @@ useGet<any>(ApiConst.API_MOCK_GET).then(({ name }) => {
 })
 
 const state = useUserState()
-const name = computed(() => state?.name)
+const token = computed(() => state?.token)
 
 const refresh = async () => {
   const result = await useApi().apiRefreshToken()

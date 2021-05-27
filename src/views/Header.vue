@@ -21,7 +21,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { AMenu, AMenuItem, ASelect, ASelectOption } from '#/ant-design-vue'
 import RouterConst from '../router/const'
-import { useStore } from '../store'
+import { useAppState, useStore } from '../store'
 import { AppActionEnum } from '../store/modules/app/action'
 import Logo from './Logo'
 
@@ -65,8 +65,9 @@ onMounted(() => {
   })
 })
 
+const appState = useAppState() || { lang: 'en-US' }
 const store = useStore()
-const { lang } = toRefs(store.state.app)
+const { lang } = toRefs(appState)
 i18n.locale.value = lang.value
 function switchLangChange(value: string) {
   i18n.locale.value = value

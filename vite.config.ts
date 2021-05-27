@@ -60,7 +60,7 @@ export default ({ mode, command }: ConfigEnv) => {
           // }
         }
       },
-      chunkSizeWarningLimit: 550
+      chunkSizeWarningLimit: 650
     }
   })
 }

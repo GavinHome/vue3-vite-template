@@ -1,4 +1,6 @@
 import { AxiosRequestConfig } from 'axios'
+import { UserActionEnum } from '@/store/modules/user/action'
+import { useStore } from '@/store'
 import { useWarnMsg } from '../useMessage'
 import { useUserInfo, useCheckToken } from '../useUser'
 import router from '../../router'
@@ -19,9 +21,10 @@ const useToken = async (config: AxiosRequestConfig) => {
   const outParamsUrl = getUrlWithOutParams(config.url)
   if (VERIFY_NEED_TOKEN(outParamsUrl)) {
     if (outParamsUrl === ApiConst.API_REFRESH_TOKEN) {
-      if (!config.headers.Authorization) {
-        const user = useUserInfo()
-        config.headers.Authorization = `Bearer ${user.token}`
+      const store = useStore()
+      const { token } = store.getters[UserActionEnum.GETTER_USER]
+      if (!config.headers.Authorization && token) {
+        config.headers.Authorization = `Bearer ${token}`
       }
     } else {
       useCheckToken()

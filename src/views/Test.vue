@@ -9,17 +9,17 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
-import { useStore } from '../store'
+import { useAppState, useStore } from '../store'
 import { AppActionEnum } from '../store/modules/app/action'
 
 const msg = ref('test')
-
+const appState = useAppState() || { count: 10 }
 const store = useStore()
-// const count = ref<number>(store.state.app.count) //lost reactivity
-const { count } = toRefs(store.state.app)
+// const count = ref<number>(appState.count) //lost reactivity
+const { count } = toRefs(appState)
 
 const increment = () => {
   store.dispatch(AppActionEnum.increment)
-  // count.value = store.state.app.count //lost reactivity, get count
+  // count.value = appState.count //lost reactivity, get count
 }
 </script>

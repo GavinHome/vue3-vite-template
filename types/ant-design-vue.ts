@@ -10,7 +10,7 @@
  *
  * So this file generates a new type of ant-design-vue types to solve this problem.
  */
-import { Menu, Select, Layout, Button, Card } from 'ant-design-vue'
+import { Menu, Select, Layout, Button, Card, Form, Input } from 'ant-design-vue'
 
 const AMenu = Menu
 const AMenuItem = Menu.Item
@@ -20,5 +20,20 @@ const ALayout = Layout
 const ALayoutContent = Layout.Content
 const AButton = Button
 const ACard = Card
+const AForm = Form
+const AFormItem = Form.Item
+const AInput = Input
 
-export { AMenu, AMenuItem, ASelect, ASelectOption, ALayout, ALayoutContent, AButton, ACard }
+export {
+  AMenu,
+  AMenuItem,
+  ASelect,
+  ASelectOption,
+  ALayout,
+  ALayoutContent,
+  AButton,
+  ACard,
+  AForm,
+  AFormItem,
+  AInput
+}

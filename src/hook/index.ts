@@ -1,4 +1,4 @@
-import { useUserInfo, useCheckToken } from './useUser'
+import { useUserInfo, useCheckToken, useSign } from './useUser'
 import { useLog } from './useLog'
 import { useGet, usePost, usePut, usePatch, useDelete } from './axios/useAxios'
 import { useSuccessMsg, useWarnMsg, useInfoMsg, useErrorMsg } from './useMessage'
@@ -22,6 +22,7 @@ export default {
   useLog,
   useUserInfo,
   useCheckToken,
+  useSign,
   useSuccessMsg,
   useWarnMsg,
   useInfoMsg,
@@ -45,6 +46,7 @@ export {
   useLog,
   useUserInfo,
   useCheckToken,
+  useSign,
   useSuccessMsg,
   useWarnMsg,
   useInfoMsg,

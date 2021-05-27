@@ -7,6 +7,17 @@ export default {
   ROUTER_MOCK: '数据模拟',
   ROUTER_VUEUSE: 'VueUse',
 
+  LOGIN_USERNAME: '用户名',
+  LOGIN_PASSWORD: '密码',
+  LOGIN_CONFIRM: '确认密码',
+  LOGIN_LOGIN: '登录',
+  LOGIN_RESET: '重置',
+  LOGIN_MESSAGE_INPUT_PASSWORD: '请输入密码',
+  LOGIN_MESSAGE_INPUT_PASSWORD_AGAIN: '请重复输入密码',
+  LOGIN_MESSAGE_CONFIRM_PASSWORD: '第二次与第一次输入不匹配！',
+  LOGIN_MESSAGE_SUCCESSED: '登录成功',
+  LOGIN_MESSAGE_FAILED: '登录失败',
+
   TOKEN_EXPIRE_MSG: '登录已过期，请重新登录',
 
   AUTO_LOGIN_FAIL_MESSAGE: '系统登录错误',

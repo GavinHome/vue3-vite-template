@@ -1,11 +1,12 @@
+import moment from 'moment'
 import { MockMethod } from 'vite-plugin-mock'
 import { resultError, resultSuccess } from './_util'
 
 function createFakeUserList() {
   return [
     {
-      userId: '1',
-      username: 'vben',
+      id: '1',
+      name: 'vben',
       realName: 'Vben Admin',
       avatar: 'http://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
       desc: 'manager',
@@ -19,12 +20,12 @@ function createFakeUserList() {
       ]
     },
     {
-      userId: '2',
-      username: 'test',
-      password: '123456',
+      id: '2',
+      name: 'test',
       realName: 'test user',
       avatar: 'http://q1.qlogo.cn/g?b=qq&nk=339449197&s=640',
       desc: 'tester',
+      password: '123456',
       token: 'fakeToken2',
       roles: [
         {
@@ -44,35 +45,63 @@ const fakeCodeList: any = {
 export default [
   // mock user login
   {
-    url: '/api/user/login',
+    url: '/api/v1/user/login',
     timeout: 200,
     method: 'post',
     response: ({ body }: any) => {
       const { username, password } = body
       const checkUser = createFakeUserList().find(
-        (item) => item.username === username && password === item.password
+        (item) => item.name === username && password === item.password
       )
       if (!checkUser) {
         return resultError('Incorrect account or password！')
       }
-      const { userId, username: _username, token, realName, desc, roles } = checkUser
+      const { id, name, token, realName, desc, roles } = checkUser
+      const expiration = moment().add(7200, 'second').format('YYYY-MM-DDTHH:mm:ss.SSS')
       return resultSuccess({
-        roles,
-        userId,
-        username: _username,
-        token,
+        id,
+        name,
         realName,
-        desc
+        desc,
+        token,
+        roles,
+        expiration
+      })
+    }
+  },
+  {
+    url: '/api/v1/user/refresh',
+    timeout: 200,
+    method: 'post',
+    response: ({ headers }: any) => {
+      const { authorization } = headers
+      const checkUser = createFakeUserList().find(
+        (item) => item.token === authorization.replace('Bearer ', '')
+      )
+      if (!checkUser) {
+        return resultError('Incorrect account！')
+      }
+
+      const { id, name, token, realName, desc, roles } = checkUser
+      const expiration = moment().add(7200, 'second').format('YYYY-MM-DDTHH:mm:ss.SSS')
+      return resultSuccess({
+        id,
+        name,
+        realName,
+        desc,
+        token,
+        roles,
+        expiration
       })
     }
   },
   // mock get user info
   {
-    url: '/api/user/getUserInfoById',
+    url: '/api/v1/user/getUserInfoById',
     method: 'get',
     response: ({ query }: any) => {
       const { userId } = query
-      const checkUser = createFakeUserList().find((item) => item.userId === userId)
+      const checkUser = createFakeUserList().find((item) => item.id === userId)
       if (!checkUser) {
         return resultError('The corresponding user information was not obtained!')
       }
@@ -81,7 +110,7 @@ export default [
   },
   // mock get perm code by user id
   {
-    url: '/api/user/getPermCodeByUserId',
+    url: '/api/v1/user/getPermCodeByUserId',
     timeout: 200,
     method: 'get',
     response: ({ query }: any) => {

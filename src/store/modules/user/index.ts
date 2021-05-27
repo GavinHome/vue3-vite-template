@@ -9,11 +9,12 @@ const defaultState: UserState = {
   id: '',
   name: '',
   token: '',
-  tokenExpiration: 0
+  expiration: 0
 }
 
 // create a new store
 const userModule: Module<UserState, RootState> = {
+  // namespaced: true,
   state() {
     return defaultState
   },
@@ -22,13 +23,13 @@ const userModule: Module<UserState, RootState> = {
       state.id = user.id
       state.name = user.name
       state.token = user.token
-      state.tokenExpiration = user.tokenExpiration
+      state.expiration = user.expiration
     },
     [UserActionEnum.ON_CLEAR_USER]: (state: typeof defaultState) => {
       state.id = ''
       state.name = ''
       state.token = ''
-      state.tokenExpiration = 0
+      state.expiration = 0
     }
   },
   actions: {
@@ -43,7 +44,7 @@ const userModule: Module<UserState, RootState> = {
         if (!state.token) {
           reject(config.token.NO_LOGIN)
         } else {
-          const expireDate = moment(state.tokenExpiration).toDate()
+          const expireDate = moment(state.expiration).toDate()
           const curTime = moment().toDate()
 
           if (curTime > expireDate) {
@@ -55,13 +56,13 @@ const userModule: Module<UserState, RootState> = {
               .toDate()
 
             if (refreshDate <= curTime) {
-              const result = await api.apiRefreshToken()
-              if (result.isSuccess && result.result) {
-                await dispatch(UserActionEnum.SIGN, result.result)
+              const res = await api.apiRefreshToken()
+              if (res.isSuccess && res.result) {
+                await dispatch(UserActionEnum.SIGN, res.result)
               } else {
                 reject(config.token.NO_TOKEN)
               }
-              resolve(result.result.token)
+              resolve(res.result.token)
             } else {
               resolve(state.token)
             }
@@ -70,9 +71,7 @@ const userModule: Module<UserState, RootState> = {
       })
   },
   getters: {
-    // double(state: typeof defaultState) {
-    //   return 2 * state.count
-    // }
+    [UserActionEnum.GETTER_USER]: (state: UserState) => state
   }
 }
 

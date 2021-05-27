@@ -11,9 +11,7 @@ import 'nprogress/nprogress.css'
 import Home from '@/views/Home.vue'
 import RouterConst from './const'
 import i18n from '../language'
-import { useConfig, useWarnMsg, useCheckToken } from '../hook'
-
-const { t } = i18n.global
+import { useCheckToken } from '../hook'
 
 NProgress.configure({ showSpinner: false })
 const routes: Array<RouteRecordRaw> = [
@@ -70,7 +68,8 @@ const routes: Array<RouteRecordRaw> = [
         name: `mock`,
         component: () => import('@/views/Mock.vue'),
         meta: {
-          title: `mock`
+          title: `mock`,
+          auth: true
         }
       },
       {
@@ -89,7 +88,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Login.vue'),
     meta: {
       auth: false
-    }
+    },
+    props: (route) => ({
+      redirect: route.query.redirect
+    })
   },
   {
     path: `/${RouterConst.ROUTER_ERROR}`,
@@ -115,20 +117,10 @@ router.beforeEach(
     }
 
     if (to.meta && to.meta.auth) {
-      const config = useConfig()
+      const login = () => next({ name: RouterConst.ROUTER_LOGIN, query: { redirect: to.fullPath } })
       useCheckToken()
-        .then(() => {
-          next()
-        })
-        .catch((error) => {
-          if (error === config.token.NO_TOKEN) {
-            useWarnMsg(t('TOKEN_EXPIRE_MSG'))
-          }
-          next({
-            name: RouterConst.ROUTER_LOGIN,
-            query: { redirect: to.fullPath }
-          })
-        })
+        .then(() => next())
+        .catch(login)
     } else {
       next()
     }

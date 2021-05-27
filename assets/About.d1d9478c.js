@@ -1,0 +1,1 @@
+import{x as a,y as o,o as s,c as t,H as r,k as l}from"./vendor.13d37a36.js";const n={},c=r();a("data-v-90137450");const d={class:"about"},e=l("h1",null,"This is an about page",-1),i=l("h2",null,"This text font color from `$primary-color` of var.styl",-1);o();const f=c(((a,o)=>(s(),t("div",d,[e,i]))));n.render=f,n.__scopeId="data-v-90137450";export default n;

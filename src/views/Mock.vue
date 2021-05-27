@@ -27,7 +27,7 @@ const refresh = async () => {
   if (result.isSuccess) {
     useSuccessModal('refresh token', result?.result?.token)
   } else {
-    useWarnModal('refresh token', result?.result?.token)
+    useWarnModal('refresh token', result?.message)
   }
 }
 </script>

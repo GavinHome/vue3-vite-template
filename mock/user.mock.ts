@@ -74,7 +74,15 @@ export default [
     timeout: 200,
     method: 'post',
     response: ({ headers }: any) => {
+      if (!headers) {
+        return resultError('Incorrect token!')
+      }
+
       const { authorization } = headers
+      if (!authorization) {
+        return resultError('Incorrect token!')
+      }
+
       const checkUser = createFakeUserList().find(
         (item) => item.token === authorization.replace('Bearer ', '')
       )

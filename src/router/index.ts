@@ -11,16 +11,13 @@ import 'nprogress/nprogress.css'
 import Home from '@/views/Home.vue'
 import RouterConst from './const'
 import i18n from '../language'
-import { useConfig, useMessage, useUser } from '../hook'
-
-const { t } = i18n.global
+import { useCheckToken } from '../hook'
 
 NProgress.configure({ showSpinner: false })
 const routes: Array<RouteRecordRaw> = [
   {
     path: `/`,
     name: RouterConst.ROUTER_DASHBOARD,
-    // component: () => import('@/views/Home.vue'),
     component: Home,
     redirect: `${RouterConst.ROUTER_HOME}`,
     children: [
@@ -70,7 +67,16 @@ const routes: Array<RouteRecordRaw> = [
         name: `mock`,
         component: () => import('@/views/Mock.vue'),
         meta: {
-          title: `mock`
+          title: `mock`,
+          auth: true
+        }
+      },
+      {
+        path: `/vueuse`,
+        name: `vueuse`,
+        component: () => import('@/views/VueUse.vue'),
+        meta: {
+          title: `vueuse`
         }
       }
     ]
@@ -81,7 +87,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Login.vue'),
     meta: {
       auth: false
-    }
+    },
+    props: (route) => ({
+      redirect: route.query.redirect
+    })
   },
   {
     path: `/${RouterConst.ROUTER_ERROR}`,
@@ -107,21 +116,10 @@ router.beforeEach(
     }
 
     if (to.meta && to.meta.auth) {
-      const config = useConfig()
-      useUser()
-        .checkToken()
-        .then(() => {
-          next()
-        })
-        .catch((error) => {
-          if (error === config.token.NO_TOKEN) {
-            useMessage().openWarnMsg(t('TOKEN_EXPIRE_MSG'))
-          }
-          next({
-            name: RouterConst.ROUTER_LOGIN,
-            query: { redirect: to.fullPath }
-          })
-        })
+      const login = () => next({ name: RouterConst.ROUTER_LOGIN, query: { redirect: to.fullPath } })
+      useCheckToken()
+        .then(() => next())
+        .catch(login)
     } else {
       next()
     }

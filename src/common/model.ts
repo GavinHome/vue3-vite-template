@@ -10,7 +10,7 @@ export interface UserAuthModel {
   id: string
   name: string
   token: string
-  tokenExpiration: number
+  expiration: number
 }
 
 export interface PagedResult<T> {

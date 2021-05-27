@@ -5,6 +5,18 @@ export default {
   ROUTER_AXIOS: 'Axios',
   ROUTER_TEST: 'Test',
   ROUTER_MOCK: 'Mock',
+  ROUTER_VUEUSE: 'vueuse',
+
+  LOGIN_USERNAME: 'Username',
+  LOGIN_PASSWORD: 'Password',
+  LOGIN_CONFIRM: 'Confirm Password',
+  LOGIN_LOGIN: 'Log in',
+  LOGIN_RESET: 'Reset',
+  LOGIN_MESSAGE_INPUT_PASSWORD: 'Please input the password',
+  LOGIN_MESSAGE_INPUT_PASSWORD_AGAIN: 'Please input the password again',
+  LOGIN_MESSAGE_CONFIRM_PASSWORD: "The second inputs don't match!",
+  LOGIN_MESSAGE_SUCCESSED: 'Login success',
+  LOGIN_MESSAGE_FAILED: 'Login fail',
 
   TOKEN_EXPIRE_MSG: 'Login has expired, please log in again',
 

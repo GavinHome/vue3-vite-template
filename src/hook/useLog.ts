@@ -1,7 +1,7 @@
-import useApi from './api'
-import useUser from './user'
+import useApi from './api/useApi'
+import { useUserInfo } from './useUser'
 
-const setLog = (error: any, data?: any): void => {
+const useLog = (error: any, data?: any): void => {
   // eslint-disable-next-line no-restricted-globals
   const url = location.href
   const bodyContent = {
@@ -9,7 +9,7 @@ const setLog = (error: any, data?: any): void => {
     version: `${import.meta.env.VITE_APP_VERSION}, ${import.meta.env.VITE_APP_REVISION}`,
     message: error.message,
     metaData: {
-      user: useUser().getUser()
+      user: useUserInfo()
     },
     name: error.name,
     releaseStage: import.meta.env.MODE,
@@ -38,8 +38,4 @@ const setLog = (error: any, data?: any): void => {
     .catch((e) => {})
 }
 
-const useLog = () => {
-  return { setLog }
-}
-
-export default useLog
+export { useLog }

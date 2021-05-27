@@ -1,10 +1,11 @@
 import { InjectionKey } from 'vue'
-import { createStore, Store, useStore as baseUseStore } from 'vuex'
+import { createStore, Store, useStore as baseStore } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import user from './modules/user'
 import app from './modules/app'
 import { RootState } from './state'
-import { AllStateTypes } from './types'
+import { UserState } from './modules/user/state'
+import { AppState } from './modules/app/state'
 
 const defaultState: RootState = {
   count: 0
@@ -12,7 +13,6 @@ const defaultState: RootState = {
 
 export const key: InjectionKey<Store<RootState>> = Symbol('vue-store')
 
-// create a new store
 export const store = createStore({
   state() {
     return defaultState
@@ -40,7 +40,7 @@ export const store = createStore({
     createPersistedState({
       key: 'vue3+vite+ts',
       storage: window.sessionStorage,
-      paths: ['app']
+      paths: ['app', 'user']
     })
     // secure-ls: https://juejin.cn/post/6869312828587638798
     // createPersistedState({
@@ -53,6 +53,19 @@ export const store = createStore({
   ]
 })
 
-export function useStore<T = AllStateTypes>() {
-  return baseUseStore<T>(key)
+interface States extends RootState {
+  user: UserState
+  app: AppState
+}
+
+export function useStore() {
+  return store
+}
+
+export function useUserState<T extends States>() {
+  return baseStore<T>(key)?.state?.user
+}
+
+export function useAppState<T extends States>() {
+  return baseStore<T>(key)?.state?.app
 }

@@ -3,7 +3,7 @@
     <img src="@/assets/500.svg" alt="error" />
     <div class="content">
       <h1>出错了</h1>
-      <div class="desc">{{ desc }}</div>
+      <div class="msg">{{ msg }}</div>
       <div class="back" @click="goBack">返回首页</div>
     </div>
   </div>
@@ -15,7 +15,10 @@ import { defineProps } from 'vue'
 import RouterConst from '../router/const'
 
 defineProps({
-  desc: String
+  msg: {
+    type: String,
+    default: '中华人名'
+  }
 })
 
 const router = useRouter()
@@ -23,7 +26,6 @@ const goBack = () => router.replace(RouterConst.ROUTER_HOME)
 </script>
 
 <style lang="stylus" scoped>
-// @import '@/assets/var.styl';
 .error {
   align-items: center;
   height: 100%;
@@ -40,15 +42,16 @@ const goBack = () => router.replace(RouterConst.ROUTER_HOME)
     line-height: 72px;
   }
 
-  .desc {
+  .msg {
     margin-bottom: 16px;
-    // color: $text-color-secondary;
+    color: $text-color-secondary;
     font-size: 20px;
     line-height: 28px;
+    opacity: 0.45;
   }
 
   .back {
-    // color: $primary-color;
+    color: $primary-color;
     cursor: pointer;
   }
 }

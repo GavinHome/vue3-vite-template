@@ -22,7 +22,7 @@
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
   </p>
 
-  <Button type="primary" @click="count++">count is: {{ count }}</Button>
+  <a-button type="primary" @click="count++">count is: {{ count }}</a-button>
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref, defineProps } from 'vue'
-import { Button } from 'ant-design-vue'
+import { AButton } from '#/ant-design-vue'
 
 defineProps({
   msg: {

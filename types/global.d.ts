@@ -10,7 +10,7 @@ export declare interface ViteEnv {
   VITE_USE_PWA: string
   VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none'
   VITE_APP_SHORT_NAME: string
-  VITE_PROXY: [string, string][]
+  VITE_PROXY: string
 }
 
 interface ImportMetaEnv extends ViteEnv {

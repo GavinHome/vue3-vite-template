@@ -1,5 +1,5 @@
 /* eslint-disable */
-// import { ViteEnv } from '/#/global'
+// import { ViteEnv } from '#/global'
 
 // interface ImportMetaEnv extends ViteEnv {
 //   // VITE_APP_TITLE: string

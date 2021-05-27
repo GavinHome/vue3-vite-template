@@ -21,6 +21,9 @@
     "gh-pages": "vite build --base=/vue3-vite-template/"
   },
   "dependencies": {
+    "@vueuse/core": "^5.0.0-beta.2",
+    "@vueuse/integrations": "^5.0.0-beta.2",
+    "@vueuse/shared": "^5.0.0-beta.2",
     "ant-design-vue": "^2.1.6",
     "axios": "^0.21.1",
     "mockjs": "^1.1.0",

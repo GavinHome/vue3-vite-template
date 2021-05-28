@@ -2,7 +2,7 @@
   <div class="mock">
     <div>Mock Page</div>
     <p>name is: {{ msg }}</p>
-    <p>token is: {{ token }}</p>
+    <p class="token">token is: {{ token }}</p>
     <button @click="refresh">token</button>
   </div>
 </template>
@@ -22,7 +22,9 @@ useGet<any>(ApiConst.API_MOCK_GET).then(({ name }) => {
 const state = useUserState()
 const token = computed(() => state?.token)
 
+const color = ref('red')
 const refresh = async () => {
+  color.value = 'blue'
   const result = await useApi().apiRefreshToken()
   if (result.isSuccess) {
     useSuccessModal('refresh token', result?.result?.token)
@@ -31,3 +33,9 @@ const refresh = async () => {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+.token {
+  color: v-bind(color)
+}
+</style>

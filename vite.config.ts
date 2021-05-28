@@ -56,7 +56,7 @@ export default ({ mode, command }: ConfigEnv) => {
         output: {
           // manualChunks: {
           //   // moment: ['moment'],
-          //   // loash: ['lodash']
+          //   // lodash: ['lodash']
           // }
         }
       },
